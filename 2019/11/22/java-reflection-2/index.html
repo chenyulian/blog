@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+
+    <!-- meta -->
+
+
+<title>Java反射学习笔记（二） | kpt.ink</title>
+
+
+    <meta name="keywords" content="Java">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="通过反射获取方法信息除了类，基本类型（int, double, boolean etc）和Java关键字也有其对应的类类型（Class Type)：  获取基本类型的类类型（Class Type）：1Class c1 &#x3D; int.class; 获取关键字的类类型（Class Type)：1Class c2 &#x3D; void.class;  tips: Java类外的关键字（如package）没有类类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java反射学习笔记（二）">
+<meta property="og:url" content="http://kpt.ink/2019/11/22/java-reflection-2/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="通过反射获取方法信息除了类，基本类型（int, double, boolean etc）和Java关键字也有其对应的类类型（Class Type)：  获取基本类型的类类型（Class Type）：1Class c1 &#x3D; int.class; 获取关键字的类类型（Class Type)：1Class c2 &#x3D; void.class;  tips: Java类外的关键字（如package）没有类类型">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-22T02:12:06.000Z">
+<meta property="article:modified_time" content="2020-11-19T14:39:34.263Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Java反射学习笔记（二）
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/11/" class="post-meta__date button">2019-11-22</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h3 id="通过反射获取方法信息"><a href="#通过反射获取方法信息" class="headerlink" title="通过反射获取方法信息"></a>通过反射获取方法信息</h3><p>除了类，基本类型（int, double, boolean etc）和Java关键字也有其对应的类类型（Class Type)：</p>
+<ul>
+<li>获取基本类型的类类型（Class Type）：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c1 = <span class="keyword">int</span>.class;</span><br></pre></td></tr></table></figure></li>
+<li>获取关键字的类类型（Class Type)：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c2 = <span class="keyword">void</span>.class;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>tips: Java类外的关键字（如package）没有类类型。extends, implements也没有类类型。</p>
+</blockquote>
+</li>
+</ul>
+<p>此外，Java还提供了获取类的方法的方法：</p>
+<ul>
+<li>获取所有的public方法：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Method ms1[] = c1.getMethods();</span><br></pre></td></tr></table></figure></li>
+<li>获取所有自己声明的方法（不包括从父类继承来的方法）：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Method ms2[] = c1.getDeclaredMethods();</span><br></pre></td></tr></table></figure>
+Method类提供了获取方法的参数列表的类型对应的类类型（Class Type）的方法，即如果参数类型为int，则返回int.class：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Method m = ms1[<span class="number">0</span>];</span><br><span class="line">Class paramTypes[] = m.getParameterTypes();</span><br></pre></td></tr></table></figure>
+还可以获取返回类型的类类型（Class Type）：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class returnType = m.getReturnType();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>tips: 通过Constructor类可以获取类的构造方法，与Method类的用法一样。</p>
+</blockquote>
+</li>
+</ul>
+<p>如此，我们可以根据一个对象，获取它的类的所有方法信息（包括private方法, 构造方法）。代码见：<a target="_blank" rel="noopener" href="https://github.com/trilliean/Java-learning-examples/blob/master/reflection/ClassUtil.java">github</a></p>
+<h3 id="获取成员变量构造函数信息"><a href="#获取成员变量构造函数信息" class="headerlink" title="获取成员变量构造函数信息"></a>获取成员变量构造函数信息</h3><p>成员变量也有对应的类类型（Class Type），用Field表示。</p>
+<ul>
+<li>获取所有成员变量：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fields fs[] = c.getDeclaredFields();</span><br></pre></td></tr></table></figure></li>
+<li>获取Public的成员变量：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fields fs[] = c.getFields();</span><br></pre></td></tr></table></figure></li>
+<li>获取成员变量的信息<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Field field = fs[<span class="number">0</span>];</span><br><span class="line">Class fieldType = field.getType();</span><br><span class="line"><span class="comment">//获取成员变量的名称</span></span><br><span class="line">String fieldName = field.getName();</span><br><span class="line"><span class="comment">//获取成员变量的类型（字符串表示）</span></span><br><span class="line">String typeName = fieldType.getName();</span><br></pre></td></tr></table></figure>
+如此，我们可以根据一个对象，获得它的类的所有成员变量。（包括私有变量）<h3 id="方法反射的基本操作"><a href="#方法反射的基本操作" class="headerlink" title="方法反射的基本操作"></a>方法反射的基本操作</h3>现在,假如Foo类中有个print方法：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    System.out.print(a + b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+在上一部分中我们知道了如何获取一个类的所有方法。如何获取一个特定的方法呢？Class类提供了getMethod()方法来实现这个需求：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Foo foo = <span class="keyword">new</span> Foo();</span><br><span class="line">Class c = foo.getClass();</span><br><span class="line">Method method = c.getMethod(<span class="string">&quot;print&quot;</span>, <span class="keyword">new</span> Class[]&#123;<span class="keyword">int</span>.class, <span class="keyword">int</span>.class&#125;);</span><br></pre></td></tr></table></figure>
+这样就获取到了这个方法。同理，可以用getDeclaredMethod()来获取private的方法。<br>如果我们想调用foo对象的print方法，正常的思路是：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo.print(<span class="number">1</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+另一种思路是通过print方法来“调用”foo对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object o = method.invoke(foo, <span class="number">1</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>o的类型由返回值的类型决定，如果没有返回值则为null, 否则和返回值类型一样。注意要做强制类型转换。</p>
+</blockquote>
+</li>
+</ul>
+<p>这两种方法操作的结果是一样的。<br>方法反射的意义是什么呢？我们知道，通过方法反射我们可以获得private的方法，当我们想调用private的方法时，比如某些私有的构造方法，我们便可以通过调用方法对象的setAccessible方法，使得这些私有方法可以为我们所用。此外，方法反射在框架中的应用较为常见，由于笔者还没有研究过框架源码，所以只展开到这里，有兴趣的读者可以自行研究。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>我们知道，面向对象的特性之一就是封装。使用private关键字，是为了将不想暴露在外的变量或者方法对外隐藏起来。而反射却提供了获取私有变量和私有方法的能力，这不是违背了面向对象的封装思想吗？其实，当我们深入研究反射的机制后，会发现并不是如此。为了便于理解，我们暂时把这个问题放到一边，先去思考一个泛型的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ArrayList list1 = <span class="keyword">new</span> ArrayList();</span><br><span class="line">ArrayList&lt;String&gt; list2 = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">//list1可以添加任意类型的对象，list2中只能添加String对象</span></span><br><span class="line"><span class="comment">//list1和list2的类类型（Class Type）是否相等呢？</span></span><br><span class="line">Class c1 = list1.getClass();</span><br><span class="line">Class c2 = list2.getClass();</span><br><span class="line">System.out.print(c1 == c2);</span><br></pre></td></tr></table></figure>
+<p>打印结果为true，大家可以自行验证。<br>这个结果说明，list1和list2编译之后得到的.class文件是相同的，编译之后的集合是去泛型化的。如果我们绕过编译，那么就可以向list2中添加非String对象了。思路还是用method.invoke():</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Method method = c2.getMethod(<span class="string">&quot;add&quot;</span>, Object.class);</span><br><span class="line">method.invoke(list2, <span class="number">100</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>通过打印list2的内容可得知，整数100现在可以加进list2中了。而这是在编译之后进行的操作，对原来的<code>add()</code>方法不造成任何影响。如果你用常规的<code>list2.add()</code>方法，依然不能将非String对象添加进list2中。到这里结论已经出来了，反射给我们提供了一种在运行时动态修改.class文件的能力，并不对源文件造成影响，提高了Java的灵活性。</p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2020-11-19</p></div> 
+    <div class="post-meta__cats"><a href="/tags/Java/" class="post-tags__link button"># Java</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2020/11/18/hello-world/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            Hello World
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/11/21/java-reflection/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Java反射学习笔记（一）
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2020 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
