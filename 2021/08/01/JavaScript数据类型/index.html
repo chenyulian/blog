@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+
+    <!-- meta -->
+
+
+<title>JavaScript数据类型 | kpt.ink</title>
+
+
+    <meta name="keywords" content="JavaScript">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="起源JavaScript是Netscape公司的程序员Brendan Eich发明的一门语言。为了给新推出的Navigator浏览器提供交互功能，Netscape雇佣了Brendan来为这个浏览器设计一门脚本语言。Brendan的主要方向是函数式编程，而Netscape的管理层希望这门语言参考Java。因此一门同时具有面向对象编程风格 和函数式编程风格 的混搭式语言诞生了。 JavaScript基">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript数据类型">
+<meta property="og:url" content="http://kpt.ink/2021/08/01/JavaScript%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="起源JavaScript是Netscape公司的程序员Brendan Eich发明的一门语言。为了给新推出的Navigator浏览器提供交互功能，Netscape雇佣了Brendan来为这个浏览器设计一门脚本语言。Brendan的主要方向是函数式编程，而Netscape的管理层希望这门语言参考Java。因此一门同时具有面向对象编程风格 和函数式编程风格 的混搭式语言诞生了。 JavaScript基">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-08T14:38:28.694Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/page/" class="navbar-menu button">Page</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/page/" class="dropdown-menu button">Page</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        JavaScript数据类型
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/08/" class="post-meta__date button">2021-08-01</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h2><p>JavaScript是Netscape公司的程序员Brendan Eich发明的一门语言。为了给新推出的Navigator浏览器提供交互功能，Netscape雇佣了Brendan来为这个浏览器设计一门脚本语言。Brendan的主要方向是函数式编程，而Netscape的管理层希望这门语言参考Java。因此一门同时具有<strong>面向对象编程风格</strong> 和<strong>函数式编程风格</strong> 的混搭式语言诞生了。</p>
+<h2 id="JavaScript基础"><a href="#JavaScript基础" class="headerlink" title="JavaScript基础"></a>JavaScript基础</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>JavaScript有8种数据类型，分别是：数值<code>number</code>、字符串<code>string</code>、布尔<code>bool</code>、符号<code>symbol</code>、空<code>null</code>、空<code>undefined</code>、对象<code>object</code>、<code>BigInt</code>（2020年新增）。</p>
+<h4 id="数值number"><a href="#数值number" class="headerlink" title="数值number"></a>数值number</h4><p>JavaScript内部，所有数字都是以64位浮点数形式储存，整数也是如此。数值可以以整数、小数、科学计数法、八进制、十六进制、二进制等形式书写。</p>
+<p>以下是一些特殊的数值：</p>
+<ul>
+<li><p><code>+0</code>和<code>-0</code>，JavaScript 的64位浮点数之中，有一个二进制位是符号位，因此存在2个0。正0和负0是等价的。</p>
+</li>
+<li><p><code>NaN</code>，表示不是一个数字（Not-A-Number）。主要出现在将字符串解析成数字出错的场合。<code>NaN</code>通过运算符（ <code>==</code> 、 <code>!=</code> 、 <code>===</code> 、以及 <code>!==</code>）和任何变量比较的结果都是<code>false</code>，包括它自己。要比较的话，需要用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN">Number.isNaN()</a> 或 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/isNaN">isNaN()</a>函数。</p>
+</li>
+</ul>
+<p>&ensp;&ensp;&ensp;&ensp;<code>0 / 0</code>的结果是<code>NaN</code>。</p>
+<ul>
+<li><code>Infinity</code>，表示无穷大，有正负之分。<code>1 / 0</code>的结果是<code>Infinity</code>，<code>1 / (-0)</code>的结果是<code>-Infinity</code>。</li>
+</ul>
+<h4 id="字符串-string"><a href="#字符串-string" class="headerlink" title="字符串 string"></a>字符串 string</h4><p>JavaScript每个字符固定占2个字节。</p>
+<p>JavaScript提供了与<code>Base64</code>相关的全局方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.btoa <span class="comment">// 正常字符串转为Base64编码</span></span><br><span class="line"><span class="built_in">window</span>.atob <span class="comment">// Base65编码的字符串转换为原来的字符串</span></span><br></pre></td></tr></table></figure>
+
+
+<p>这两个方法只适合<code>ASCII</code>码的字符，要将非 <code>ASCII</code>码字符转为 <code>Base64</code>编码，必须中间插入一个转码环节，再使用这两个方法。</p>
+<h4 id="布尔值-boolean"><a href="#布尔值-boolean" class="headerlink" title="布尔值 boolean"></a>布尔值 boolean</h4><p>JavaScript有5个<code>falsy</code>值（相当于<code>false</code>但是又不是<code>false</code>的值，通常在if判断时使用）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">undefined</span></span><br><span class="line"><span class="literal">null</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="literal">NaN</span></span><br><span class="line"><span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="空undefined-和null"><a href="#空undefined-和null" class="headerlink" title="空undefined 和null"></a>空undefined 和null</h4><p><code>undefined</code>和<code>null</code>都可以表示“没有”。区别是<code>undefined</code>侧重于表示“没有定义”，而<code>null</code>侧重于表示“空”。<code>null</code>转为数值时为0，<code>undefined</code>转为数值时为<code>NaN</code>。</p>
+<p><code>undefined</code>一些典型应用场景：</p>
+<ul>
+<li><p>如果一个变量声明了，但是没有赋值，默认是<code>undefined</code></p>
+</li>
+<li><p>如果一个函数，没有写return语句，那么默认return <code>undefined</code></p>
+</li>
+</ul>
+<h4 id="对象-object"><a href="#对象-object" class="headerlink" title="对象 object"></a>对象 object</h4><p>JavaScript中的对象是花括号包裹的键值对，如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  name: <span class="string">&#x27;John&#x27;</span>,</span><br><span class="line">  age: <span class="number">18</span>,</span><br><span class="line">  x: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; &#125;,</span><br><span class="line">  y: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>JavaScript中，<strong>函数、数组也是对象</strong> 。</p>
+<h3 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h3><p>JavaScript声明变量有以下方式：</p>
+<ol>
+<li>使用<code>var</code>关键字</li>
+</ol>
+<p>&ensp;&ensp;&ensp;&ensp;<code>var</code>关键字已经不推荐使用。var的特点是：</p>
+<p>&ensp;&ensp;&ensp;&ensp;- 没有块级作用域：用 <code>var</code> 声明的变量，不是函数作用域就是全局作用域。代码块对它无效。</p>
+<p>&ensp;&ensp;&ensp;&ensp;- 允许重新声明：用<code>var</code>声明一个变量，如果再用<code>var</code>声明，不会报错。用<code>let</code>的话会报错。</p>
+<p>&ensp;&ensp;&ensp;&ensp;- 存在变量提升：<code>var</code>声明的变量，可以在其声明语句前被使用。</p>
+<ol start="2">
+<li>使用<code>let</code>关键字</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>&ensp;&ensp;&ensp;&ensp;#### 规则</p>
+<p>&ensp;&ensp;&ensp;&ensp;- 遵循块作用域</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;使用范围不能超过定义的<code>&#123;&#125;</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="keyword">let</span> b = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+
+<p>&ensp;&ensp;&ensp;&ensp;- 不能重复声明</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;指同一作用域下不能有两个名字相同的let声明。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">2</span> <span class="comment">// 会报错</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">let</span> a = <span class="number">3</span> <span class="comment">// 不会报错</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>&ensp;&ensp;&ensp;&ensp;- 可以赋值，也可以不赋值</p>
+<p>&ensp;&ensp;&ensp;&ensp;- 必须先声明再使用</p>
+<p>&ensp;&ensp;&ensp;&ensp;- 全局声明的let变量，不会变成window的属性</p>
+<p>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;说明：全局声明的var变量会挂到window上</p>
+<ol start="3">
+<li>使用<code>const</code>关键字</li>
+</ol>
+<p>&ensp;&ensp;&ensp;&ensp;<code>const</code>的规则和<code>let</code>几乎一样。</p>
+<p>&ensp;&ensp;&ensp;&ensp;只有一条不一样：声明时就要赋值，赋值后不能改。请注意，如果<code>const</code>声明的变量是基本类型，那么变量的值不能改；如果声明的变量是对象，那么对象的引用不能改（该变量不能指向另一个对象）。</p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/a9f32eb0715a41a9a9f7812kc81322c012c81e728d9d180">https://weread.qq.com/web/reader/a9f32eb0715a41a9a9f7812kc81322c012c81e728d9d180</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/06/birth_of_javascript.html?from=ourjs.com">http://www.ruanyifeng.com/blog/2011/06/birth_of_javascript.html?from=ourjs.com</a></p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2021-09-08</p></div> 
+    <div class="post-meta__cats"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2021/08/02/JavaScript%E5%AF%B9%E8%B1%A1%E5%9F%BA%E7%A1%80/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            JavaScript对象基础
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/11/22/java-reflection-2/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Java反射学习笔记（二）
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2021 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
