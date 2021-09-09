@@ -15,6 +15,8 @@
 
     <!--icon-->
 
+    <link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+
 
     <!-- meta -->
 
@@ -37,7 +39,7 @@
 <meta property="og:description" content="对象是JavaScript中数据类型的一种，是由&amp;#123;&amp;#125;包裹的键值对集合。 对象的声明有两种方式： 123let obj &#x3D; &amp;#123;name:&amp;#x27;xxx&amp;#x27;, age: 18&amp;#125;let obj &#x3D; new Object(&amp;#123;name:&amp;#x27;xxx&amp;#x27;, age: 18&amp;#125;)   对象的键名是字符串类型，即使它没有加引号。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-08-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-09-08T14:38:57.082Z">
+<meta property="article:modified_time" content="2021-09-09T02:58:56.651Z">
 <meta property="article:author" content="kinpture">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary_large_image">
@@ -48,10 +50,19 @@
  
 
 
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
 
     
     
-        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/github.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/agate.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')!==-1)this.media='all'">
         
     
 
@@ -82,9 +93,7 @@
                 
                     <a href="/archives/" class="navbar-menu button">归档</a>
                 
-                    <a href="/friends/" class="navbar-menu button">友链</a>
-                
-                    <a href="/page/" class="navbar-menu button">Page</a>
+                    <a href="/about/" class="navbar-menu button">关于</a>
                 
             </div>
         
@@ -93,8 +102,18 @@
 
         
         
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
 
-        
+
+         
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
 
         
             <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
@@ -106,9 +125,7 @@
                 
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
-                    <a href="/friends/" class="dropdown-menu button">友链</a>
-                
-                    <a href="/page/" class="dropdown-menu button">Page</a>
+                    <a href="/about/" class="dropdown-menu button">关于</a>
                 
             </div>
         
@@ -139,75 +156,108 @@
 </div>
 
 
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">对象的隐藏属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">查看对象的属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E6%9C%89%E6%9F%90%E4%B8%AA%E5%B1%9E%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">判断对象是否有某个属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%88%96%E6%B7%BB%E5%8A%A0%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">修改或添加对象属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E8%B5%8B%E5%80%BC"><span class="toc-number">3.1.</span> <span class="toc-text">直接赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="toc-number">3.2.</span> <span class="toc-text">批量赋值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">删除对象的属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-number">5.</span> <span class="toc-text">属性的特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E5%99%A8"><span class="toc-number">6.</span> <span class="toc-text">访问器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%9A%90%E8%97%8F%E5%B1%9E%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">对象的隐藏属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">查看对象的属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E6%9C%89%E6%9F%90%E4%B8%AA%E5%B1%9E%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">判断对象是否有某个属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%88%96%E6%B7%BB%E5%8A%A0%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">修改或添加对象属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E8%B5%8B%E5%80%BC"><span class="toc-number">3.1.</span> <span class="toc-text">直接赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="toc-number">3.2.</span> <span class="toc-text">批量赋值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">删除对象的属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-number">5.</span> <span class="toc-text">属性的特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E5%99%A8"><span class="toc-number">6.</span> <span class="toc-text">访问器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+
 
 <article class="post content-card">
     <div class="post__header"></div>
     <div class="post__content">
         <p>对象是JavaScript中数据类型的一种，是由<code>&#123;&#125;</code>包裹的键值对集合。</p>
 <p>对象的声明有两种方式：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">name</span>:<span class="string">&#x27;xxx&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span>&#125;</span><br><span class="line"><span class="keyword">let</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>(&#123;<span class="attr">name</span>:<span class="string">&#x27;xxx&#x27;</span>, <span class="attr">age</span>: <span class="number">18</span>&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">let</span> obj = &#123;<span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;xxx&#x27;</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">18</span>&#125;<br><span class="hljs-keyword">let</span> obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>(&#123;<span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;xxx&#x27;</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">18</span>&#125;)<br><br></code></pre></td></tr></table></figure>
 
 
 <p>对象的键名是字符串类型，即使它没有加引号。</p>
 <p>除了用字符串常量作为键值，还可以用字符串变量（ES6新增）：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> key = <span class="string">&#x27;title&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;&#125;;</span><br><span class="line">obj[key] = <span class="string">&#x27;钢铁是怎样炼成的&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">let</span> key = <span class="hljs-string">&#x27;title&#x27;</span>;<br><span class="hljs-keyword">let</span> obj = &#123;&#125;;<br>obj[key] = <span class="hljs-string">&#x27;钢铁是怎样炼成的&#x27;</span>;<br></code></pre></td></tr></table></figure>
 
 
 <p><code>key</code>可以是计算出来的，例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> index = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> key = <span class="string">`title-<span class="subst">$&#123;index&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">let</span> key = <span class="number">1e2</span>; <span class="comment">// 会计算成数字100再作为key</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">let</span> index = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">let</span> key = <span class="hljs-string">`title-<span class="hljs-subst">$&#123;index&#125;</span>`</span>;<br><span class="hljs-keyword">let</span> key = <span class="hljs-number">1e2</span>; <span class="hljs-comment">// 会计算成数字100再作为key</span><br></code></pre></td></tr></table></figure>
 
 
-<h1 id="对象的隐藏属性"><a href="#对象的隐藏属性" class="headerlink" title="对象的隐藏属性"></a>对象的隐藏属性</h1><p>每个对象都有一个隐藏属性<code>__proto__</code>，这个属性存储其<strong>原型</strong> 的地址。</p>
-<h1 id="查看对象的属性"><a href="#查看对象的属性" class="headerlink" title="查看对象的属性"></a>查看对象的属性</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  name: <span class="string">&#x27;xxx&#x27;</span>,</span><br><span class="line">  age: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 查看obj的所有键名</span></span><br><span class="line"><span class="built_in">Object</span>.keys(obj); <span class="comment">// [&quot;name&quot;, &quot;age&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看obj的所有值</span></span><br><span class="line"><span class="built_in">Object</span>.values(obj); <span class="comment">// [&quot;xxx&quot;, 18]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看键和值</span></span><br><span class="line"><span class="built_in">Object</span>.entries(obj); <span class="comment">// [[&quot;name&quot;, &quot;xxx&quot;], [&quot;age&quot;, 18]]</span></span><br></pre></td></tr></table></figure>
+<h2 id="对象的隐藏属性"><a href="#对象的隐藏属性" class="headerlink" title="对象的隐藏属性"></a>对象的隐藏属性</h2><p>每个对象都有一个隐藏属性<code>__proto__</code>，这个属性存储其<strong>原型</strong> 的地址。</p>
+<h2 id="查看对象的属性"><a href="#查看对象的属性" class="headerlink" title="查看对象的属性"></a>查看对象的属性</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">let</span> obj = &#123;<br>  name: <span class="hljs-string">&#x27;xxx&#x27;</span>,<br>  age: <span class="hljs-number">18</span><br>&#125;<br><span class="hljs-comment">// 查看obj的所有键名</span><br><span class="hljs-built_in">Object</span>.keys(obj); <span class="hljs-comment">// [&quot;name&quot;, &quot;age&quot;]</span><br><br><span class="hljs-comment">// 查看obj的所有值</span><br><span class="hljs-built_in">Object</span>.values(obj); <span class="hljs-comment">// [&quot;xxx&quot;, 18]</span><br><br><span class="hljs-comment">// 查看键和值</span><br><span class="hljs-built_in">Object</span>.entries(obj); <span class="hljs-comment">// [[&quot;name&quot;, &quot;xxx&quot;], [&quot;age&quot;, 18]]</span><br></code></pre></td></tr></table></figure>
 
 
 <p>这三个方法可以查看对象自身的属性，但是不能查看对象原型上的属性。</p>
-<h2 id="判断对象是否有某个属性"><a href="#判断对象是否有某个属性" class="headerlink" title="判断对象是否有某个属性"></a>判断对象是否有某个属性</h2><p><code>hasOwnProperty</code>方法可以判断<strong>对象自身</strong> 是否有某属性：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj.hasOwnProperty(<span class="string">&#x27;toString&#x27;</span>) <span class="comment">// false</span></span><br><span class="line">obj.hasOwnProperty(<span class="string">&#x27;name&#x27;</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h3 id="判断对象是否有某个属性"><a href="#判断对象是否有某个属性" class="headerlink" title="判断对象是否有某个属性"></a>判断对象是否有某个属性</h3><p><code>hasOwnProperty</code>方法可以判断<strong>对象自身</strong> 是否有某属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript">obj.hasOwnProperty(<span class="hljs-string">&#x27;toString&#x27;</span>) <span class="hljs-comment">// false</span><br>obj.hasOwnProperty(<span class="hljs-string">&#x27;name&#x27;</span>) <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
 
 
 <p><code>键名 in obj</code>可以判断<strong>对象自身+其原型</strong> 上是否有某属性：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;toString&#x27;</span> <span class="keyword">in</span> obj <span class="comment">// true</span></span><br><span class="line"><span class="string">&#x27;name&#x27;</span> <span class="keyword">in</span> obj <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-string">&#x27;toString&#x27;</span> <span class="hljs-keyword">in</span> obj <span class="hljs-comment">// true</span><br><span class="hljs-string">&#x27;name&#x27;</span> <span class="hljs-keyword">in</span> obj <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
 
 
-<h1 id="修改或添加对象属性"><a href="#修改或添加对象属性" class="headerlink" title="修改或添加对象属性"></a>修改或添加对象属性</h1><h2 id="直接赋值"><a href="#直接赋值" class="headerlink" title="直接赋值"></a>直接赋值</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  name: <span class="string">&#x27;John&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.age = <span class="number">18</span>;</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">obj[<span class="string">&#x27;age&#x27;</span>] = <span class="number">18</span>;  <span class="comment">// 这种方法 使用的键名可以为计算出来的字符串、字符串变量</span></span><br></pre></td></tr></table></figure>
+<h2 id="修改或添加对象属性"><a href="#修改或添加对象属性" class="headerlink" title="修改或添加对象属性"></a>修改或添加对象属性</h2><h3 id="直接赋值"><a href="#直接赋值" class="headerlink" title="直接赋值"></a>直接赋值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">let</span> obj = &#123;<br>  name: <span class="hljs-string">&#x27;John&#x27;</span><br>&#125;<br><br>obj.age = <span class="hljs-number">18</span>;<br><span class="hljs-comment">// 或者</span><br>obj[<span class="hljs-string">&#x27;age&#x27;</span>] = <span class="hljs-number">18</span>;  <span class="hljs-comment">// 这种方法 使用的键名可以为计算出来的字符串、字符串变量</span><br></code></pre></td></tr></table></figure>
 
 
-<h2 id="批量赋值"><a href="#批量赋值" class="headerlink" title="批量赋值"></a>批量赋值</h2><p>ES6新增。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(obj, &#123;<span class="attr">age</span>:<span class="number">18</span>, <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="批量赋值"><a href="#批量赋值" class="headerlink" title="批量赋值"></a>批量赋值</h3><p>ES6新增。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-built_in">Object</span>.assign(obj, &#123;<span class="hljs-attr">age</span>:<span class="hljs-number">18</span>, <span class="hljs-attr">gender</span>: <span class="hljs-string">&#x27;male&#x27;</span>&#125;)<br></code></pre></td></tr></table></figure>
 
 
 <p>如果参数中的两个对象有键名重复，那么后面的会覆盖前面的。</p>
-<h1 id="删除对象的属性"><a href="#删除对象的属性" class="headerlink" title="删除对象的属性"></a>删除对象的属性</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> obj.name</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line"><span class="keyword">delete</span> obj[<span class="string">&#x27;name&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="删除对象的属性"><a href="#删除对象的属性" class="headerlink" title="删除对象的属性"></a>删除对象的属性</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">delete</span> obj.name<br><span class="hljs-comment">// 或者</span><br><span class="hljs-keyword">delete</span> obj[<span class="hljs-string">&#x27;name&#x27;</span>]<br></code></pre></td></tr></table></figure>
 
 
-<h1 id="属性的特征"><a href="#属性的特征" class="headerlink" title="属性的特征"></a>属性的特征</h1><p>属性的特征是用来描述属性的一些信息的，例如是否可修改等。</p>
+<h2 id="属性的特征"><a href="#属性的特征" class="headerlink" title="属性的特征"></a>属性的特征</h2><p>属性的特征是用来描述属性的一些信息的，例如是否可修改等。</p>
 <p>使用<code>Object.getOwnPropertyDescriptor</code>函数可以获取属性特征对象。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  name: <span class="string">&#x27;John&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">&quot;name&quot;</span>));</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> &#123;</span></span><br><span class="line"><span class="comment">  configurable: true,</span></span><br><span class="line"><span class="comment">  enumerable: true,</span></span><br><span class="line"><span class="comment">  value: &quot;xxx&quot;,</span></span><br><span class="line"><span class="comment">  writable: true</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">let</span> obj = &#123;<br>  name: <span class="hljs-string">&#x27;John&#x27;</span>,<br>&#125;<br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="hljs-string">&quot;name&quot;</span>));<br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> &#123;</span><br><span class="hljs-comment">  configurable: true,</span><br><span class="hljs-comment">  enumerable: true,</span><br><span class="hljs-comment">  value: &quot;xxx&quot;,</span><br><span class="hljs-comment">  writable: true</span><br><span class="hljs-comment">&#125;</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
 
 
 <p><code>configurable</code>：如果为 <code>true</code>，则此特性可以被删除，这些属性也可以被修改，否则不可以。</p>
 <p><code>enumerable</code>：如果为 <code>true</code>，表示该属性是可枚举的，会被在循环中列出，否则不会被列出。</p>
 <p><code>writable</code>：如果为 <code>true</code>，则值可以被修改，否则它是只可读的。</p>
 <p>我们可以使用<code>Object.defineProperty</code>来修改它们。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(obj, propertyName, descriptor)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-built_in">Object</span>.defineProperty(obj, propertyName, descriptor)<br></code></pre></td></tr></table></figure>
 
 
-<h1 id="访问器"><a href="#访问器" class="headerlink" title="访问器"></a>访问器</h1><p>我们可以使用访问器<code>getter</code>和<code>setter</code>来获取和修改属性：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  <span class="keyword">get</span> <span class="title">propName</span>() &#123;</span><br><span class="line">    <span class="comment">// 当读取 obj.propName 时，getter 起作用</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="keyword">set</span> <span class="title">propName</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="comment">// 当执行 obj.propName = value 操作时，setter 起作用</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="访问器"><a href="#访问器" class="headerlink" title="访问器"></a>访问器</h2><p>我们可以使用访问器<code>getter</code>和<code>setter</code>来获取和修改属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">let</span> obj = &#123;<br>  <span class="hljs-keyword">get</span> <span class="hljs-title">propName</span>() &#123;<br>    <span class="hljs-comment">// 当读取 obj.propName 时，getter 起作用</span><br>  &#125;,<br><br>  <span class="hljs-keyword">set</span> <span class="hljs-title">propName</span>(<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-comment">// 当执行 obj.propName = value 操作时，setter 起作用</span><br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 
 <p>使用访问器的好处是我们可以在<code>getter</code>和<code>setter</code>中添加一些逻辑，以便对属性做更多控制。</p>
 <p>例如，如果我们想禁止太短的 <code>user</code> 的 name，我们可以创建一个 setter <code>name</code>，并将值存储在一个单独的属性 <code>_name</code> 中： // todo: 键用symbol() 不用_name</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123;</span><br><span class="line">  <span class="keyword">get</span> <span class="title">name</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>._name;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="keyword">set</span> <span class="title">name</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (value.length &lt; <span class="number">4</span>) &#123;</span><br><span class="line">      alert(<span class="string">&quot;Name is too short, need at least 4 characters&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">this</span>._name = value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">user.name = <span class="string">&quot;Pete&quot;</span>;</span><br><span class="line">alert(user.name); <span class="comment">// Pete</span></span><br><span class="line"></span><br><span class="line">user.name = <span class="string">&quot;&quot;</span>; <span class="comment">// Name 太短了……</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">let</span> user = &#123;<br>  <span class="hljs-keyword">get</span> <span class="hljs-title">name</span>() &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>._name;<br>  &#125;,<br><br>  <span class="hljs-keyword">set</span> <span class="hljs-title">name</span>(<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-keyword">if</span> (value.length &lt; <span class="hljs-number">4</span>) &#123;<br>      alert(<span class="hljs-string">&quot;Name is too short, need at least 4 characters&quot;</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-built_in">this</span>._name = value;<br>  &#125;<br>&#125;;<br><br>user.name = <span class="hljs-string">&quot;Pete&quot;</span>;<br>alert(user.name); <span class="hljs-comment">// Pete</span><br><br>user.name = <span class="hljs-string">&quot;&quot;</span>; <span class="hljs-comment">// Name 太短了……</span><br></code></pre></td></tr></table></figure>
 
 
 <p>需要注意的是，在严格模式下，对一个只有getter没有setter的属性进行赋值操作会报错；在非严格模式下，不会报错，但是赋值操作不会生效。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://wangdoc.com/javascript/types/object.html">网道 - JavaScript教程 - 对象</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://wangdoc.com/javascript/types/object.html">网道 - JavaScript教程 - 对象</a></p>
 
     </div>
-     
-    <div class="post-footer__meta"><p>updated at 2021-09-08</p></div> 
+    
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>kpt
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="http://kpt.ink/2021/08/02/JavaScript%E5%AF%B9%E8%B1%A1%E5%9F%BA%E7%A1%80/">http://kpt.ink/2021/08/02/JavaScript%E5%AF%B9%E8%B1%A1%E5%9F%BA%E7%A1%80/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2021-09-09</p></div> 
     <div class="post-meta__cats"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a></div> 
 </article>
 
@@ -267,7 +317,7 @@
     
         
         <p class="footer-copyright">
-            Copyright © 2021 <a href="/">kpt.ink</a>
+            Copyright © 2019&nbsp;-&nbsp;2021 <a href="/">kpt.ink</a>
         </p>
     
     
