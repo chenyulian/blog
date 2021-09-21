@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    <link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+
+
+    <!-- meta -->
+
+
+<title>JQuery常用API整理 | kpt.ink</title>
+
+
+    <meta name="keywords" content="JQuery">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="整理了一些JQuery中自己常用的API，目前主要包括DOM操作相关API，其他以后再补充。 CoreJQuery()接收一个CSS选择器字符串，返回一个可以操作DOM元素的对象。此方法可以简写成$()。 $(document) &#x2F;&#x2F;选择整个文档对象$(&amp;#x27;#myId&amp;#x27;) &#x2F;&#x2F;选择id为myId的元素$(&amp;#x27;div.myClass&amp;#x27;) &#x2F;&#x2F;选择class为myC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JQuery常用API整理">
+<meta property="og:url" content="http://kpt.ink/2021/07/01/JQuery%E5%B8%B8%E7%94%A8API%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="整理了一些JQuery中自己常用的API，目前主要包括DOM操作相关API，其他以后再补充。 CoreJQuery()接收一个CSS选择器字符串，返回一个可以操作DOM元素的对象。此方法可以简写成$()。 $(document) &#x2F;&#x2F;选择整个文档对象$(&amp;#x27;#myId&amp;#x27;) &#x2F;&#x2F;选择id为myId的元素$(&amp;#x27;div.myClass&amp;#x27;) &#x2F;&#x2F;选择class为myC">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-21T14:02:47.173Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="JQuery">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/github.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/agate.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')!==-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+         
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        JQuery常用API整理
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/07/" class="post-meta__date button">2021-07-01</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Core"><span class="toc-number">1.</span> <span class="toc-text">Core</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JQuery"><span class="toc-number">1.1.</span> <span class="toc-text">JQuery()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.</span> <span class="toc-text">链式操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">DOM操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">操作元素属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%85%83%E7%B4%A0"><span class="toc-number">2.2.</span> <span class="toc-text">移动元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E3%80%81%E5%88%A0%E9%99%A4%E5%92%8C%E5%88%9B%E5%BB%BA%E5%85%83%E7%B4%A0"><span class="toc-number">2.3.</span> <span class="toc-text">复制、删除和创建元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6"><span class="toc-number">2.3.1.</span> <span class="toc-text">复制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4"><span class="toc-number">2.3.2.</span> <span class="toc-text">删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA"><span class="toc-number">2.3.3.</span> <span class="toc-text">创建</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">绑定事件处理器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Core"><span class="toc-number">1.</span> <span class="toc-text">Core</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JQuery"><span class="toc-number">1.1.</span> <span class="toc-text">JQuery()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.</span> <span class="toc-text">链式操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">DOM操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">操作元素属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%85%83%E7%B4%A0"><span class="toc-number">2.2.</span> <span class="toc-text">移动元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E3%80%81%E5%88%A0%E9%99%A4%E5%92%8C%E5%88%9B%E5%BB%BA%E5%85%83%E7%B4%A0"><span class="toc-number">2.3.</span> <span class="toc-text">复制、删除和创建元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6"><span class="toc-number">2.3.1.</span> <span class="toc-text">复制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4"><span class="toc-number">2.3.2.</span> <span class="toc-text">删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA"><span class="toc-number">2.3.3.</span> <span class="toc-text">创建</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">绑定事件处理器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>整理了一些JQuery中自己常用的API，目前主要包括DOM操作相关API，其他以后再补充。</p>
+<h2 id="Core"><a href="#Core" class="headerlink" title="Core"></a>Core</h2><h3 id="JQuery"><a href="#JQuery" class="headerlink" title="JQuery()"></a>JQuery()</h3><p>接收一个CSS选择器字符串，返回一个<strong>可以操作DOM元素的对象</strong>。此方法可以简写成<code>$()</code>。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">$(<span class="built_in">document</span>) <span class="comment">//选择整个文档对象</span></span><br><span class="line">$(<span class="string">&#x27;#myId&#x27;</span>) <span class="comment">//选择id为myId的元素</span></span><br><span class="line">$(<span class="string">&#x27;div.myClass&#x27;</span>) <span class="comment">//选择class为myClass的div元素</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个对象包含了根据选择器查找到的DOM元素的<strong>集合</strong>，以及一些JQuery提供的方法和属性。</p>
+<h3 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h3><p>借鉴CSS选择器，JQuery自己发明了一些功能更强的选择器。使用<code>JQuery()</code>方法时，除了可以传CSS选择器字符串作为参数，还可以传递JQuery<a target="_blank" rel="noopener" href="https://api.jquery.com/category/selectors/">自己发明的选择器</a>。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&#x27;input[value=&quot;Hot Fuzz&quot;]&#x27;</span>) <span class="comment">//选择value为Hot Fuzz的input元素</span></span><br><span class="line">$(<span class="string">&#x27;a[hreflang|=&quot;en&quot;]&#x27;</span>) <span class="comment">//选择hreflang是以en为前缀的所有a标签</span></span><br><span class="line">$(<span class="string">&#x27;input[name*=&quot;man&quot;]&#x27;</span>) <span class="comment">//选择name属性中含有man文本的input元素</span></span><br><span class="line">$(<span class="string">&#x27;tr:odd&#x27;</span>) <span class="comment">//选择表格的奇数行</span></span><br><span class="line">$(<span class="string">&#x27;div:gt(2)&#x27;</span>) <span class="comment">// 选择所有的div元素，除了前三个</span></span><br><span class="line">$(<span class="string">&#x27;a:first&#x27;</span>) <span class="comment">//选择网页中第一个a元素</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><p>JQuery提供了一些<a target="_blank" rel="noopener" href="https://api.jquery.com/category/traversing/filtering/">过滤器</a>，可以对<code>JQuery()</code>方法查找到的结果集进行过滤。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&#x27;div&#x27;</span>).has(<span class="string">&#x27;p&#x27;</span>); <span class="comment">// 选择包含p元素的div元素</span></span><br><span class="line">$(<span class="string">&#x27;div&#x27;</span>).first(); <span class="comment">//选择第1个div元素</span></span><br><span class="line">$(<span class="string">&#x27;div&#x27;</span>).eq(<span class="number">5</span>); <span class="comment">//选择第6个div元素</span></span><br><span class="line">$(<span class="string">&#x27;div&#x27;</span>).not(<span class="string">&#x27;.myClass&#x27;</span>); <span class="comment">//选择class不等于myClass的div元素</span></span><br><span class="line">$(<span class="string">&#x27;div&#x27;</span>).filter(<span class="string">&#x27;.myClass&#x27;</span>); <span class="comment">//选择class等于myClass的div元素</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="链式操作"><a href="#链式操作" class="headerlink" title="链式操作"></a>链式操作</h3><p>链式操作是JQuery设计的巧思之一。一个链式操作的代码示例长这样：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 选择div里的所有h3元素，再找到第3个h3元素</span></span><br><span class="line">$(<span class="string">&#x27;div&#x27;</span>).find(<span class="string">&#x27;h3&#x27;</span>).eq(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>jQuery还提供了<code>.end()</code>方法，使得结果集可以后退到上一步。</p>
+<h2 id="DOM操作"><a href="#DOM操作" class="headerlink" title="DOM操作"></a>DOM操作</h2><h3 id="操作元素属性"><a href="#操作元素属性" class="headerlink" title="操作元素属性"></a>操作元素属性</h3><p>JQuery设计的另一个巧妙之处，就是使用同一个函数完成取值和赋值操作。具体实现是在函数体里判断参数类型和参数个数，来判断走取值逻辑还是赋值逻辑。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&#x27;h1&#x27;</span>).html(); <span class="comment">//html()没有参数，表示取出h1的值</span></span><br><span class="line">$(<span class="string">&#x27;h1&#x27;</span>).html(<span class="string">&#x27;Hello&#x27;</span>); <span class="comment">//html()有参数Hello，表示对h1进行赋值</span></span><br></pre></td></tr></table></figure>
+
+<p>常用的函数如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">.html()</span><br><span class="line">.text()</span><br><span class="line">.css() </span><br><span class="line">.attr() <span class="comment">// 取出或设置某个属性的值</span></span><br><span class="line">.val() <span class="comment">// 取出或设置表单元素的值</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="移动元素"><a href="#移动元素" class="headerlink" title="移动元素"></a>移动元素</h3><p><a target="_blank" rel="noopener" href="https://api.jquery.com/append/">.append()</a> 在每个匹配元素末尾插入参数内容。</p>
+<p><a target="_blank" rel="noopener" href="https://api.jquery.com/appendTo/">.appendTo()</a> 将匹配的元素插入到目标元素的最后面（内部插入）。</p>
+<p><a target="_blank" rel="noopener" href="https://api.jquery.com/prepend/">.prepend()</a> 将参数内容插入到每个匹配元素的前面（元素内部）。</p>
+<p><a target="_blank" rel="noopener" href="https://api.jquery.com/prependTo/">.prependTo()</a> 将匹配到的所有元素插入到目标前面（元素内）。</p>
+<p><a target="_blank" rel="noopener" href="https://api.jquery.com/after/">.after()</a> 在匹配元素集合中的每个元素后面插入参数所指定的内容，作为其兄弟节点。</p>
+<p><a target="_blank" rel="noopener" href="https://api.jquery.com/before/">.before()</a> 在匹配元素的前面插入参数所指定的内容（外部插入）。</p>
+<p><a target="_blank" rel="noopener" href="https://api.jquery.com/insertAfter/">.insertAfter()</a> 在目标元素后面插入集合中每个匹配的元素(注：插入的元素作为目标元素的兄弟元素)。</p>
+<p><a target="_blank" rel="noopener" href="https://api.jquery.com/insertBefore/">.insertBefore()</a> 在目标元素前面插入集合中每个匹配的元素(注：插入的元素作为目标元素的兄弟元素)。</p>
+<h3 id="复制、删除和创建元素"><a href="#复制、删除和创建元素" class="headerlink" title="复制、删除和创建元素"></a>复制、删除和创建元素</h3><h4 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h4><p>复制元素，使用<a target="_blank" rel="noopener" href="https://api.jquery.com/clone/">.clone()</a>方法。它会返回一个深拷贝副本。</p>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">.detach() <span class="comment">//从DOM中去掉所有匹配的元素。</span></span><br><span class="line">.empty() <span class="comment">//清空元素内容，但不删除该元素。</span></span><br><span class="line">.remove() <span class="comment">//将匹配元素集合从DOM中删除。（注：同时移除元素上的事件及 jQuery 数据。）</span></span><br><span class="line">.unwrap() <span class="comment">//将匹配元素集合的父级元素删除，保留自身（和兄弟元素，如果存在）在原来的位置。 </span></span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是<a target="_blank" rel="noopener" href="https://api.jquery.com/detach/">.detach()</a>方法保留了被删除元素的事件，有利于重新插入文档时使用。</p>
+<h4 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h4><p>创建新元素，只需要把新元素传入<a target="_blank" rel="noopener" href="https://api.jquery.com/jQuery/">JQuery()</a>方法即可。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&#x27;&lt;p&gt;Hello&lt;/p&gt;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><h3 id="绑定事件处理器"><a href="#绑定事件处理器" class="headerlink" title="绑定事件处理器"></a>绑定事件处理器</h3><p><a target="_blank" rel="noopener" href="https://www.jquery123.com/on/">.on</a> 在选定的元素上绑定一个或多个事件处理函数。</p>
+<p><a target="_blank" rel="noopener" href="https://www.jquery123.com/bind/">.bind</a> 为一个元素绑定一个事件处理器。</p>
+<p><a target="_blank" rel="noopener" href="https://www.jquery123.com/trigger/">.trigger</a> 根据绑定到匹配元素的给定的事件类型执行所有的处理程序和行为。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.jquery123.com/">jQuery API 中文文档</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/07/jquery_fundamentals.html">jQuery设计思想</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>kpt
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="http://kpt.ink/2021/07/01/JQuery%E5%B8%B8%E7%94%A8API%E6%95%B4%E7%90%86/">http://kpt.ink/2021/07/01/JQuery%E5%B8%B8%E7%94%A8API%E6%95%B4%E7%90%86/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2021-09-21</p></div> 
+    <div class="post-meta__cats"><a href="/tags/JQuery/" class="post-tags__link button"># JQuery</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2021/08/01/JavaScript%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            JavaScript数据类型
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/11/22/java-reflection-2/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Java反射学习笔记（二）
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2019&nbsp;-&nbsp;2021 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

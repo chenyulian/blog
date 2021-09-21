@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    <link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+
+
+    <!-- meta -->
+
+
+<title>DOM事件 | kpt.ink</title>
+
+
+    <meta name="keywords" content="DOM">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="为了使DOM元素具有交互能力，例如，对用户点击这一动作做出响应，浏览器为DOM元素提供了事件机制。addEventListener可以为元素绑定一个事件监听器： &#x2F;&#x2F; 假设 myButton 是一个按钮myButton.addEventListener(&amp;#x27;click&amp;#x27;, greet, false);function greet(event) &amp;#123;    &#x2F;&#x2F; 打印并查看">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM事件">
+<meta property="og:url" content="http://kpt.ink/2021/08/15/DOM%E4%BA%8B%E4%BB%B6/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="为了使DOM元素具有交互能力，例如，对用户点击这一动作做出响应，浏览器为DOM元素提供了事件机制。addEventListener可以为元素绑定一个事件监听器： &#x2F;&#x2F; 假设 myButton 是一个按钮myButton.addEventListener(&amp;#x27;click&amp;#x27;, greet, false);function greet(event) &amp;#123;    &#x2F;&#x2F; 打印并查看">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/09/21/631lHypWOhaMmSk.png">
+<meta property="article:published_time" content="2021-08-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-21T14:15:32.341Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="DOM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.loli.net/2021/09/21/631lHypWOhaMmSk.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/github.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/agate.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')!==-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+         
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        DOM事件
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/08/" class="post-meta__date button">2021-08-15</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">DOM事件模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98"><span class="toc-number">2.</span> <span class="toc-text">事件委托</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">DOM事件模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98"><span class="toc-number">2.</span> <span class="toc-text">事件委托</span></a></li></ol>
+    </div>
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>为了使DOM元素具有交互能力，例如，对用户点击这一动作做出响应，浏览器为DOM元素提供了事件机制。<code>addEventListener</code>可以为元素绑定一个事件监听器：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 假设 myButton 是一个按钮</span></span><br><span class="line">myButton.addEventListener(<span class="string">&#x27;click&#x27;</span>, greet, <span class="literal">false</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 打印并查看event对象</span></span><br><span class="line">    <span class="comment">// 打印arguments，以防忽略了其他参数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;greet: &#x27;</span> + <span class="built_in">arguments</span>);</span><br><span class="line">    alert(<span class="string">&#x27;Hello world&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="DOM事件模型"><a href="#DOM事件模型" class="headerlink" title="DOM事件模型"></a>DOM事件模型</h2><p>想象以下场景：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;div1&quot;</span>&gt;</span><br><span class="line">	&lt;div id=<span class="string">&quot;div2&quot;</span>&gt;</span><br><span class="line">		&lt;div id=<span class="string">&quot;div3&quot;</span>&gt;</span><br><span class="line">			文字</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当点击<code>div3</code>时，其父元素也会触发被点击这一事件，也就是说，点击<code>div3</code>，<code>div1</code>、<code>div2</code>、<code>body</code>、<code>html</code>、<code>document</code>也被点击了，均会触发点击事件。</p>
+<p>如果<code>div1</code>、<code>div2</code>、<code>div3</code>这三个元素均添加了click事件监听器，那么哪个回调函数会先执行呢？</p>
+<p>早期IE的观点是，应该先调用<code>div3</code>的函数，然后调用<code>div2</code>的函数，以此类推。也就是事件从里向外传播（propagation)。这个过程形象地被称为<strong>事件冒泡</strong>。</p>
+<p>Netscape则认为，事件是由外向里传播，以上面的代码为例，事件会先传播到最外层元素<code>div1</code>，然后再传播到<code>div2</code>。如果<code>div1</code>和<code>div2</code>均对点击事件进行了监听，那么先执行的会是<code>div1</code>的回调函数。这个过程被称为<strong>事件捕获</strong>。</p>
+<p>为了兼容这两种事件流模型，2002年，W3C发布DOM2级事件模型，它规定了事件流包含三个阶段：<strong>事件捕获阶段</strong>、<strong>目标阶段</strong>、<strong>事件冒泡阶段</strong>。首先按事件捕获的顺序看有没有函数监听，然后按事件冒泡的顺序看有没有函数监听，如果有监听函数就调用，没有就跳过。开发者可以自己选择将监听函数放到捕获阶段还是冒泡阶段。</p>
+<p><img src="https://i.loli.net/2021/09/21/631lHypWOhaMmSk.png" alt="event flow"></p>
+<p><a target="_blank" rel="noopener" href="https://www.w3.org/TR/DOM-Level-3-Events/#event-flow">event flow</a></p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">div.addEventListener(<span class="string">&#x27;click&#x27;</span>, fn, bool)</span><br></pre></td></tr></table></figure>
+
+<p>如果<code>bool</code>不传或者为<code>falsy</code>值，就让<code>fn</code>走冒泡，即当浏览器在冒泡阶段发现<code>div</code>上有<code>fn</code>监听函数，就会调用fn，调用顺序按事件冒泡模型中的事件传播顺序来。如果<code>bool</code>为<code>true</code>，就在捕获阶段调用<code>fn</code>。</p>
+<h2 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h2><p>事件委托是事件流的一个典型应用。考虑以下场景：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;parent&quot;</span>&gt;</span><br><span class="line">	&lt;button /&gt;</span><br><span class="line">	&lt;button /&gt;</span><br><span class="line">	&lt;button /&gt;</span><br><span class="line">	&lt;button /&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>现在想要给<code>div</code>里的所有按钮都添加监听事件，如果分别给每个<code>button</code>添加监听器，不仅代码量多，每个监听器都会占用内存，比较消耗资源。解决办法是，我们可以为父元素<code>div</code>添加一个监听器，这样子元素<code>button</code>被点击的时候事件也会触发。这就是<strong>事件委托</strong>。</p>
+<p><strong>事件委托</strong>的另一个应用是监听目前不存在，之后可能会动态添加的元素。可以监听这种动态元素的父元素，等点击的时候再判断是不是想要的元素。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>kpt
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="http://kpt.ink/2021/08/15/DOM%E4%BA%8B%E4%BB%B6/">http://kpt.ink/2021/08/15/DOM%E4%BA%8B%E4%BB%B6/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2021-09-21</p></div> 
+    <div class="post-meta__cats"><a href="/tags/DOM/" class="post-tags__link button"># DOM</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2021/09/15/%E6%97%A0%E9%99%90%E6%BB%9A%E5%8A%A8Infinite%20Scroll/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            无限滚动 Infinite Scroll
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2021/08/03/JavaScript%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%80/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            JavaScript函数基础
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2019&nbsp;-&nbsp;2021 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
