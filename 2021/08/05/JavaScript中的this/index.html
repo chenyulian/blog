@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    <link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+
+
+    <!-- meta -->
+
+
+<title>JavaScript中的this | kpt.ink</title>
+
+
+    <meta name="keywords" content="JavaScript">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="函数上下文this指函数调用相关联的对象，称之为函数上下文。可以在函数内部获取到。 函数上下文是来自面向对象语言（如Java）的概念，在面向对象语言中，方法定义在类内部，因此需要一个机制来获取当前类的实例的一些信息，这就产生了this。this通常指向定义当前方法的类的实例 。不过，在JavaScript中，函数并不和对象绑定，是可以单独调用的。除了作为一个方法（method）来调用，还有一些其他">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中的this">
+<meta property="og:url" content="http://kpt.ink/2021/08/05/JavaScript%E4%B8%AD%E7%9A%84this/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="函数上下文this指函数调用相关联的对象，称之为函数上下文。可以在函数内部获取到。 函数上下文是来自面向对象语言（如Java）的概念，在面向对象语言中，方法定义在类内部，因此需要一个机制来获取当前类的实例的一些信息，这就产生了this。this通常指向定义当前方法的类的实例 。不过，在JavaScript中，函数并不和对象绑定，是可以单独调用的。除了作为一个方法（method）来调用，还有一些其他">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-21T14:33:03.514Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/github.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/agate.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')!==-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+         
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        JavaScript中的this
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/08/" class="post-meta__date button">2021-08-05</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.</span> <span class="toc-text">函数上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">调用函数的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9B%B4%E6%8E%A5%E8%B0%83%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">作为函数直接调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E8%A2%AB%E8%B0%83%E7%94%A8"><span class="toc-number">2.2.</span> <span class="toc-text">作为方法被调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">作为构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87call%E6%88%96%E8%80%85apply%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8"><span class="toc-number">2.4.</span> <span class="toc-text">通过call或者apply方法调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bind%E6%96%B9%E6%B3%95%EF%BC%8C%E7%BB%91%E5%AE%9Athis"><span class="toc-number">2.5.</span> <span class="toc-text">bind方法，绑定this</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.</span> <span class="toc-text">函数上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">调用函数的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9B%B4%E6%8E%A5%E8%B0%83%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">作为函数直接调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E8%A2%AB%E8%B0%83%E7%94%A8"><span class="toc-number">2.2.</span> <span class="toc-text">作为方法被调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">作为构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87call%E6%88%96%E8%80%85apply%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8"><span class="toc-number">2.4.</span> <span class="toc-text">通过call或者apply方法调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bind%E6%96%B9%E6%B3%95%EF%BC%8C%E7%BB%91%E5%AE%9Athis"><span class="toc-number">2.5.</span> <span class="toc-text">bind方法，绑定this</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="函数上下文"><a href="#函数上下文" class="headerlink" title="函数上下文"></a>函数上下文</h2><p><code>this</code>指函数调用相关联的对象，称之为函数上下文。可以在函数内部获取到。</p>
+<p>函数上下文是来自面向对象语言（如Java）的概念，在面向对象语言中，方法定义在类内部，因此需要一个机制来获取当前类的实例的一些信息，这就产生了<code>this</code>。<code>this</code>通常指向定义当前方法的<strong>类的实例</strong> 。不过，在JavaScript中，函数并不和对象绑定，是可以单独调用的。除了作为一个方法（method）来调用，还有一些其他的调用方法。根据调用方法的不同，<code>this</code>的值也不同。也就是说，JavaScript中<code>this</code>的值是在调用时计算出来的。</p>
+<h2 id="调用函数的方法"><a href="#调用函数的方法" class="headerlink" title="调用函数的方法"></a>调用函数的方法</h2><p>函数的调用方法有以下几种：</p>
+<ol>
+<li>作为一个函数（function），直接调用。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">add(<span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li>作为一个方法（method），关联在一个对象上，实现面向对象编程。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">obj.add(<span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+
+<ol start="3">
+<li>作为构造函数，实例化一个新对象。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> Person()</span><br></pre></td></tr></table></figure>
+
+
+<ol start="4">
+<li>通过<code>call</code>或者<code>apply</code>方法调用。可以指定<code>this</code>的值。</li>
+</ol>
+<h3 id="作为函数直接调用"><a href="#作为函数直接调用" class="headerlink" title="作为函数直接调用"></a>作为函数直接调用</h3><p>作为函数直接调用，<code>this</code>的值可能为全局变量<code>window</code>（非严格模式下）或者<code>undefined</code>（严格模式下）。</p>
+<h3 id="作为方法被调用"><a href="#作为方法被调用" class="headerlink" title="作为方法被调用"></a>作为方法被调用</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123;</span><br><span class="line">  name: <span class="string">&quot;John&quot;</span>,</span><br><span class="line">  age: <span class="number">30</span>,</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// &quot;this&quot; 指的是“当前的对象”</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.name); <span class="comment">// 等同于console.log(user.name)</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">user.sayHi(); <span class="comment">// John</span></span><br></pre></td></tr></table></figure>
+
+
+<p>作为方法被调用时，<code>this</code>指向调用该方法的对象，也就是<code>user</code>。</p>
+<p>如果没有<code>this</code>关键字，那么，如果我们将user复制给另一个变量admin，sayHi方法需要改成这样：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(admin.name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>这样不利于代码复用。</p>
+<h3 id="作为构造函数"><a href="#作为构造函数" class="headerlink" title="作为构造函数"></a>作为构造函数</h3><p>使用<code>new</code>关键字调用构造函数。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.isAdmin = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> user = <span class="keyword">new</span> User(<span class="string">&quot;Jack&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+<p>当一个函数被使用 <code>new</code> 操作符执行时，它按照以下步骤：</p>
+<ol>
+<li> 一个新的空对象被创建并分配给 <code>this</code>。</li>
+<li> 函数体执行。通常它会修改 <code>this</code>，为其添加新的属性。</li>
+<li> 返回 <code>this</code> 的值。</li>
+</ol>
+<p>换句话说，<code>new User(...)</code> 做的就是类似的事情：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// this = &#123;&#125;;（隐式创建）</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 添加属性到 this</span></span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">  <span class="built_in">this</span>.isAdmin = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// return this;（隐式返回）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>构造函数中的this，始终指向这个新创建的对象。</p>
+<p>注意，我们也可以显式给构造函数返回一个值。返回的值遵循以下规则：</p>
+<ul>
+<li>  如果 <code>return</code> 返回的是一个对象，则返回这个对象，而不是 <code>this</code>。</li>
+<li>  如果 <code>return</code> 返回的是一个原始类型，则忽略。</li>
+</ul>
+<h3 id="通过call或者apply方法调用"><a href="#通过call或者apply方法调用" class="headerlink" title="通过call或者apply方法调用"></a>通过call或者apply方法调用</h3><p>我们可以通过<code>call</code>或者<code>apply</code>调用一个方法：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">arguments</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn.call(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>) <span class="comment">//第一个参数就会被当成this传进去</span></span><br></pre></td></tr></table></figure>
+
+
+<p>注意，如果传递的<code>this</code>不是对象，js会默认封装成对象：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">fn.call(<span class="number">1</span>) <span class="comment">//这个1会变成一个对象</span></span><br></pre></td></tr></table></figure>
+
+
+<p>方法定义里加上一句<code>&#39;use strict&#39;</code>之后，这个1就不会变成对象了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">  &#x27;use strict&#x27;</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn.call(<span class="number">1</span>) <span class="comment">//这个1不会变成对象</span></span><br></pre></td></tr></table></figure>
+
+
+<p><code>apply</code>方法也可以用来显式传递<code>this</code>，区别是<code>apply</code>后面传一整个参数数组，<code>call</code>传单个的参数。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">fn.call(<span class="literal">undefined</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">fn.apply(<span class="literal">undefined</span>, [<span class="number">1</span>,<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="bind方法，绑定this"><a href="#bind方法，绑定this" class="headerlink" title="bind方法，绑定this"></a>bind方法，绑定this</h3><p><code>bind</code>方法会接收一个参数，返回一个新函数，<code>bind</code>的第一个参数就是新函数的<code>this</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">p1, p2</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>, p1, p2)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> f2 = f1.bind(&#123;<span class="attr">name</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<p><code>f2</code>就是<code>f1</code>绑定了<code>this</code>之后的新函数。</p>
+<p><code>f2()</code>等价于<code>f1.call(&#123;name: &#39;xxx&#39;&#125;)</code>。</p>
+<p><code>.bind</code>还可以绑定其他参数：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> f3 = f1.bind(&#123;<span class="attr">name</span>: <span class="string">&#x27;xxx&#x27;</span>&#125;, <span class="string">&#x27;hi&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p><code>f3()</code>等价于<code>f1.call(&#123;name: &#39;xxx&#39;&#125;, &#39;hi&#39;)</code>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>JavaScript中函数不与一个对象绑定，可以单独调用，此外还可以通过<code>call</code>、<code>apply</code>调用。</p>
+<p><code>this</code>是函数调用上下文对象，表示函数调用时的环境。</p>
+<p>根据函数调用方式的不同，<code>this</code>的值也不同：</p>
+<ul>
+<li><p>单独调用时，<code>this</code>的值为<code>undefined</code>（严格模式）或者<code>window</code>（非严格模式）。</p>
+</li>
+<li><p>作为对象的方法被调用时，值为调用该方法的对象。</p>
+</li>
+<li><p>构造方法中，<code>this</code>指向一个隐形的空对象，构造函数对<code>this</code>进行操作之后会隐式<code>return this</code>。不过，也可以显式<code>return</code>一个值。</p>
+</li>
+<li><p><code>call</code>和<code>apply</code>方法可以显式指定<code>this</code>的值，区别是<code>apply</code>后面传一整个参数数组，<code>call</code>传单个的参数。</p>
+</li>
+<li><p>函数调用<code>bind</code>方法，可以显式指定该函数的<code>this</code>的值，返回一个新函数，新函数的<code>this</code>就是沃恩给的值。</p>
+</li>
+</ul>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>kpt
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="http://kpt.ink/2021/08/05/JavaScript%E4%B8%AD%E7%9A%84this/">http://kpt.ink/2021/08/05/JavaScript%E4%B8%AD%E7%9A%84this/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2021-09-21</p></div> 
+    <div class="post-meta__cats"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2021/08/15/DOM%E4%BA%8B%E4%BB%B6/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            DOM事件
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2021/08/03/JavaScript%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%80/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            JavaScript函数基础
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2019&nbsp;-&nbsp;2021 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
