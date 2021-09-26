@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    <link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+
+
+    <!-- meta -->
+
+
+<title>快速了解Vue 3 Composition API | kpt.ink</title>
+
+
+    <meta name="keywords" content="Vue">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="Vue 2和Vue 3的区别 createApp()取代了 new Vue()  Vue 3的 Compostion API和 Vue 2的data options   &amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Vue 2，数据定义在data，函数定义在methods，代码分散，耦合度高。 &amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Vue 3，数据和方法都写在setup里，方法可以抽离">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快速了解Vue 3 Composition API">
+<meta property="og:url" content="http://kpt.ink/2021/09/20/Vue3-Composition-Quickview/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="Vue 2和Vue 3的区别 createApp()取代了 new Vue()  Vue 3的 Compostion API和 Vue 2的data options   &amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Vue 2，数据定义在data，函数定义在methods，代码分散，耦合度高。 &amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;Vue 3，数据和方法都写在setup里，方法可以抽离">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-26T11:53:48.525Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/github.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/agate.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')!==-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+         
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        快速了解Vue 3 Composition API
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/09/" class="post-meta__date button">2021-09-20</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue-2%E5%92%8CVue-3%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text">Vue 2和Vue 3的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%BE%E9%80%9A%E6%A1%86%E6%9E%B6%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">精通框架的条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Composition-API"><span class="toc-number">3.</span> <span class="toc-text">Composition API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#setup"><span class="toc-number">3.1.</span> <span class="toc-text">setup</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">3.1.1.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA"><span class="toc-number">3.1.2.</span> <span class="toc-text">执行时机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%A8%E6%85%8E%E4%BD%BF%E7%94%A8this"><span class="toc-number">3.1.3.</span> <span class="toc-text">谨慎使用this</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.1.4.</span> <span class="toc-text">返回值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90"><span class="toc-number">3.2.</span> <span class="toc-text">生命周期钩子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Provide-Inject"><span class="toc-number">3.3.</span> <span class="toc-text">Provide &#x2F; Inject</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Provide"><span class="toc-number">3.3.1.</span> <span class="toc-text">使用Provide</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Inject"><span class="toc-number">3.3.2.</span> <span class="toc-text">使用Inject</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getCurrentInstance"><span class="toc-number">3.4.</span> <span class="toc-text">getCurrentInstance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">4.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue-2%E5%92%8CVue-3%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text">Vue 2和Vue 3的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%BE%E9%80%9A%E6%A1%86%E6%9E%B6%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">精通框架的条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Composition-API"><span class="toc-number">3.</span> <span class="toc-text">Composition API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#setup"><span class="toc-number">3.1.</span> <span class="toc-text">setup</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">3.1.1.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA"><span class="toc-number">3.1.2.</span> <span class="toc-text">执行时机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%A8%E6%85%8E%E4%BD%BF%E7%94%A8this"><span class="toc-number">3.1.3.</span> <span class="toc-text">谨慎使用this</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.1.4.</span> <span class="toc-text">返回值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90"><span class="toc-number">3.2.</span> <span class="toc-text">生命周期钩子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Provide-Inject"><span class="toc-number">3.3.</span> <span class="toc-text">Provide &#x2F; Inject</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Provide"><span class="toc-number">3.3.1.</span> <span class="toc-text">使用Provide</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Inject"><span class="toc-number">3.3.2.</span> <span class="toc-text">使用Inject</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getCurrentInstance"><span class="toc-number">3.4.</span> <span class="toc-text">getCurrentInstance</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">4.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="Vue-2和Vue-3的区别"><a href="#Vue-2和Vue-3的区别" class="headerlink" title="Vue 2和Vue 3的区别"></a>Vue 2和Vue 3的区别</h2><ul>
+<li><p><code>createApp()</code>取代了 <code>new Vue()</code></p>
+</li>
+<li><p>Vue 3的 Compostion API和 Vue 2的data options</p>
+</li>
+</ul>
+<p>&ensp;&ensp;&ensp;&ensp;Vue 2，数据定义在<code>data</code>，函数定义在<code>methods</code>，代码分散，耦合度高。</p>
+<p>&ensp;&ensp;&ensp;&ensp;Vue 3，数据和方法都写在<code>setup</code>里，方法可以抽离出来放在单独的文件里，方便我们做一些代码结构上的优化。</p>
+<p>关于Composition API的意义，看完<a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/composition-api-introduction.html">这篇文档</a>就很清楚了。</p>
+<h2 id="精通框架的条件"><a href="#精通框架的条件" class="headerlink" title="精通框架的条件"></a>精通框架的条件</h2><ol>
+<li><p>通读文档</p>
+</li>
+<li><p>熟练阅读源码，关键地方可以自己手写</p>
+</li>
+</ol>
+<p>比如Vue的模板编译、数据劫持、依赖收集等功能</p>
+<h2 id="Composition-API"><a href="#Composition-API" class="headerlink" title="Composition API"></a>Composition API</h2><h3 id="setup"><a href="#setup" class="headerlink" title="setup"></a><a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/composition-api-setup.html#%E7%BB%93%E5%90%88%E6%A8%A1%E6%9D%BF%E4%BD%BF%E7%94%A8">setup</a></h3><p>我们可以在<code>setup</code>中使用<a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/refs-api.html#ref">ref</a>定义响应式的对象，然后使用它。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> xxx = ref(<span class="literal">null</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>在<code>setup</code>中使用：<code>xxx.value</code></p>
+<p>在模板中使用：<code>&#123;&#123;xxx&#125;&#125;</code></p>
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>props</code></li>
+</ul>
+<p>&ensp;&ensp;&ensp;&ensp;<code>setup</code>的第一个参数，通过它可以获取组件的props。</p>
+<p>&ensp;&ensp;&ensp;&ensp;<code>props</code><strong>是响应式的</strong> ，当传入新的prop时它会更新。它不能用ES6解构，解构会消除它的响应性。</p>
+<p>&ensp;&ensp;&ensp;&ensp;如果要解构<code>props</code>，需要用到<code>toRefs</code>或者<code>toRef</code>。</p>
+<ul>
+<li><code>context</code></li>
+</ul>
+<p>&ensp;&ensp;&ensp;&ensp;<code>setup</code>的第二个参数，它是一个普通的JavaScript对象（因此可以解构），包括<code>attrs</code>、<code>slots</code>、<code>emit</code>三个属性。</p>
+<p>&ensp;&ensp;&ensp;&ensp;<code>attrs</code>和<code>slots</code>都是有状态的对象，会根据组件的状态变化而变化（需要用<code>.</code>语法获取，如<code>attrs.x</code>），但是跟<code>props</code>不同，它们<strong>不是响应式的</strong> 。如果要对它们的变化做一些操作，需要在<code>onUpdated</code>生命周期中去做。</p>
+<h4 id="执行时机"><a href="#执行时机" class="headerlink" title="执行时机"></a>执行时机</h4><p><code>setup</code> 选项在组件实例创建<strong>之前</strong> 执行。</p>
+<p>可以访问的property：<code>props</code>、<code>attrs</code>、<code>slots</code>、<code>emit</code>；</p>
+<p>不能访问的组件选项：<code>data</code>、<code>computed</code>、<code>methods</code>。</p>
+<h4 id="谨慎使用this"><a href="#谨慎使用this" class="headerlink" title="谨慎使用this"></a>谨慎使用this</h4><p>由于<code>setup</code>是在创建组件实例之前执行的，因此它里面的<code>this</code>不能获取到当前组件实例。</p>
+<h4 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h4><p>返回响应式变量，然后就能在模板中使用了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> x = ref(<span class="literal">null</span>)</span><br><span class="line">  <span class="keyword">const</span> y = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">    <span class="comment">//... </span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123; x, y &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>此外，还能返回渲染函数。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"> <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> readersNumber = ref(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">const</span> book = reactive(&#123; <span class="attr">title</span>: <span class="string">&#x27;Vue 3 Guide&#x27;</span> &#125;)</span><br><span class="line">  <span class="comment">// 请注意这里我们需要显式调用 ref 的 value</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> h(<span class="string">&#x27;div&#x27;</span>, [readersNumber.value, book.title])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="生命周期钩子"><a href="#生命周期钩子" class="headerlink" title="生命周期钩子"></a><a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/composition-api-lifecycle-hooks.html">生命周期钩子</a></h3><p>在<code>setup</code>中使用<code>onX</code>来使用声明周期钩子：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="comment">// mounted</span></span><br><span class="line">  onMounted(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Component is mounted!&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>这些函数接受一个回调函数，当钩子被组件调用时将会被执行。</p>
+<p>注意<code>beforeCreate</code>和<code>created</code>并没有对应的<code>onX</code>函数，因为<code>setup</code>就是围绕这两个生命周期钩子运行的。在这些钩子中编写的任何代码都应该直接在 <code>setup</code> 函数中编写。</p>
+<h3 id="Provide-Inject"><a href="#Provide-Inject" class="headerlink" title="Provide / Inject"></a><a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/composition-api.html#provide-inject">Provide / Inject</a></h3><p><a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/component-provide-inject.html">Provide / Inject</a>是一对用来解决组件多层嵌套时数据传递问题的API。</p>
+<p>使用时需要从<code>vue</code>中导入<code>provide</code>或者<code>inject</code>函数，然后就能在<code>setup</code>中使用了。</p>
+<h4 id="使用Provide"><a href="#使用Provide" class="headerlink" title="使用Provide"></a>使用Provide</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">provide(name, property)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="使用Inject"><a href="#使用Inject" class="headerlink" title="使用Inject"></a>使用Inject</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">inject(name)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="getCurrentInstance"><a href="#getCurrentInstance" class="headerlink" title="getCurrentInstance"></a><a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/composition-api.html#getcurrentinstance">getCurrentInstance</a></h3><p>在<code>setup</code>中不能使用<code>this</code>来获取当前组件实例，因此Vue 3提供了<code>getCurrentInstance</code> 来访问内部组件实例。</p>
+<p>官方文档建议，不要在应用中使用这个函数，而是在库中等高阶使用场景使用。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>这篇文章只是快速过一下Vue 3的Composition API，有一些细节没有提到，详细请参考文档。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/composition-api-introduction.html">Vue 3 | composition-api-introduction</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>kpt
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="http://kpt.ink/2021/09/20/Vue3-Composition-Quickview/">http://kpt.ink/2021/09/20/Vue3-Composition-Quickview/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2021-09-26</p></div> 
+    <div class="post-meta__cats"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2021/09/15/Infinite-Scroll/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            无限滚动 Infinite Scroll
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2019&nbsp;-&nbsp;2021 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    <link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+
+
+    <!-- meta -->
+
+
+<title>Vue + TypeScript项目搭建 | kpt.ink</title>
+
+
+    <meta name="keywords" content="Vue, TypeScript">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="关于TypeScriptTS官网定义： TypeScript is JavaScript with syntax for types.  TypeScript是带有类型语法的JavaScript，类型系统可以更方便地检查错误，提高代码的质量和可维护性。TS代码最终会编译成JS代码。 搭建TS - Vue项目使用Vue&#x2F;Cli搭建环境我使用的环境是：  Node v12.11.1  @vue&#x2F;cli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue + TypeScript项目搭建">
+<meta property="og:url" content="http://kpt.ink/2021/07/05/Vue-Typescript-Project/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="关于TypeScriptTS官网定义： TypeScript is JavaScript with syntax for types.  TypeScript是带有类型语法的JavaScript，类型系统可以更方便地检查错误，提高代码的质量和可维护性。TS代码最终会编译成JS代码。 搭建TS - Vue项目使用Vue&#x2F;Cli搭建环境我使用的环境是：  Node v12.11.1  @vue&#x2F;cli">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2021/09/4034a193a37b7e0e.png">
+<meta property="article:published_time" content="2021-07-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-26T12:37:20.302Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2021/09/4034a193a37b7e0e.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/github.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/agate.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')!==-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+         
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Vue + TypeScript项目搭建
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/07/" class="post-meta__date button">2021-07-05</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8ETypeScript"><span class="toc-number">1.</span> <span class="toc-text">关于TypeScript</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%AD%E5%BB%BATS-Vue%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">搭建TS - Vue项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Vue-Cli%E6%90%AD%E5%BB%BA"><span class="toc-number">2.1.</span> <span class="toc-text">使用Vue&#x2F;Cli搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-number">2.1.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.1.2.</span> <span class="toc-text">创建项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E6%97%B6%E7%9A%84%E9%80%89%E9%A1%B9"><span class="toc-number">2.1.3.</span> <span class="toc-text">创建项目时的选项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">2.1.4.</span> <span class="toc-text">启动</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">项目配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">配置文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91"><span class="toc-number">4.</span> <span class="toc-text">开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vue-property-decorator"><span class="toc-number">4.1.</span> <span class="toc-text">vue-property-decorator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class%E9%A3%8E%E6%A0%BC%E7%BB%84%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">class风格组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mixin"><span class="toc-number">4.3.</span> <span class="toc-text">mixin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2"><span class="toc-number">5.</span> <span class="toc-text">部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%88%B0github-pages"><span class="toc-number">5.1.</span> <span class="toc-text">一键部署到github pages</span></a></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8ETypeScript"><span class="toc-number">1.</span> <span class="toc-text">关于TypeScript</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%AD%E5%BB%BATS-Vue%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">搭建TS - Vue项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Vue-Cli%E6%90%AD%E5%BB%BA"><span class="toc-number">2.1.</span> <span class="toc-text">使用Vue&#x2F;Cli搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-number">2.1.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.1.2.</span> <span class="toc-text">创建项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E6%97%B6%E7%9A%84%E9%80%89%E9%A1%B9"><span class="toc-number">2.1.3.</span> <span class="toc-text">创建项目时的选项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">2.1.4.</span> <span class="toc-text">启动</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">项目配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">配置文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91"><span class="toc-number">4.</span> <span class="toc-text">开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vue-property-decorator"><span class="toc-number">4.1.</span> <span class="toc-text">vue-property-decorator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class%E9%A3%8E%E6%A0%BC%E7%BB%84%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">class风格组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mixin"><span class="toc-number">4.3.</span> <span class="toc-text">mixin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2"><span class="toc-number">5.</span> <span class="toc-text">部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%88%B0github-pages"><span class="toc-number">5.1.</span> <span class="toc-text">一键部署到github pages</span></a></li></ol></li></ol>
+    </div>
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="关于TypeScript"><a href="#关于TypeScript" class="headerlink" title="关于TypeScript"></a>关于TypeScript</h2><p><a target="_blank" rel="noopener" href="https://www.typescriptlang.org/">TS官网</a>定义：</p>
+<p>TypeScript is <strong>JavaScript with syntax for types.</strong> </p>
+<p>TypeScript是带有类型语法的JavaScript，类型系统可以更方便地检查错误，提高代码的质量和可维护性。TS代码最终会编译成JS代码。</p>
+<h2 id="搭建TS-Vue项目"><a href="#搭建TS-Vue项目" class="headerlink" title="搭建TS - Vue项目"></a>搭建TS - Vue项目</h2><h3 id="使用Vue-Cli搭建"><a href="#使用Vue-Cli搭建" class="headerlink" title="使用Vue/Cli搭建"></a>使用Vue/Cli搭建</h3><h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><p>我使用的环境是：</p>
+<ul>
+<li><p>Node v12.11.1</p>
+</li>
+<li><p>@vue/cli 4.1.1</p>
+</li>
+</ul>
+<h4 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vue create ts-vue-demo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="创建项目时的选项"><a href="#创建项目时的选项" class="headerlink" title="创建项目时的选项"></a>创建项目时的选项</h4><p>首先选择Manually select features，会出现配置界面。进行如下选择：</p>
+<p><img src="https://s3.bmp.ovh/imgs/2021/09/4034a193a37b7e0e.png" alt="项目配置选项"></p>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ts-vue-demo</span><br><span class="line">yarn serve</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h2><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><ul>
+<li><p><code>tsconfig.json</code> TS配置文件</p>
+</li>
+<li><p><code>vue.config.js</code> vue配置，可以配置一些打包工具之类的</p>
+</li>
+<li><p><code>.eslintrc.js</code> eslint配置文件</p>
+</li>
+</ul>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="vue-property-decorator"><a href="#vue-property-decorator" class="headerlink" title="vue-property-decorator"></a>vue-property-decorator</h3><p><a target="_blank" rel="noopener" href="https://github.com/kaorun343/vue-property-decorator">vue-property-decorator</a>是一个基于<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-class-component">vue-class-component</a>的库，提供了一些<code>@</code>装饰器：</p>
+<p><code>@Prop</code>修饰Prop</p>
+<p><code>@Inject</code> 指定依赖注入</p>
+<p><code>@Model</code> 指定 model</p>
+<p><code>@Watch</code> 修饰 watch方法</p>
+<p><code>@Component</code> 修饰类</p>
+<p>具体<a target="_blank" rel="noopener" href="https://github.com/kaorun343/vue-property-decorator">查看文档</a>。</p>
+<h3 id="class风格组件"><a href="#class风格组件" class="headerlink" title="class风格组件"></a>class风格组件</h3><p>使用<code>@Component</code>注解我们可以定义类风格的组件：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Prop, Vue, Watch &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-property-decorator&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Class properties will be component data</span></span><br><span class="line">  count = <span class="number">0</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Prop</span></span><br><span class="line">  <span class="meta">@Prop</span>(&#123;<span class="attr">default</span>: <span class="number">0</span>&#125;) <span class="keyword">private</span> prop1 !: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Methods will be component methods</span></span><br><span class="line">  <span class="function"><span class="title">increment</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.count++</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">decrement</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.count--</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Watch</span>(<span class="string">&#x27;count&#x27;</span>)</span><br><span class="line">  onCountChanged (val: <span class="built_in">number</span>, <span class="attr">oldVal</span>: <span class="built_in">number</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`count更新了，旧值：<span class="subst">$&#123;oldVal&#125;</span>，新值：<span class="subst">$&#123;val&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 生命周期</span></span><br><span class="line">  <span class="keyword">private</span> created ()：<span class="built_in">void</span> &#123; &#125;,</span><br><span class="line">  <span class="keyword">private</span> mounted ()：<span class="built_in">void</span> &#123; &#125;,</span><br><span class="line">  <span class="keyword">private</span> updated ()：<span class="built_in">void</span> &#123; &#125;,</span><br><span class="line">  <span class="keyword">private</span> destroyed ()：<span class="built_in">void</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="mixin"><a href="#mixin" class="headerlink" title="mixin"></a>mixin</h3><p>mixin的写法：</p>
+<p>定义mixin：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Helper</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;</span><br><span class="line">  <span class="comment">// mixin代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>使用：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskEditor</span> <span class="keyword">extends</span> <span class="title">mixins</span>(<span class="title">Helper</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 组件代码</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><h3 id="一键部署到github-pages"><a href="#一键部署到github-pages" class="headerlink" title="一键部署到github pages"></a>一键部署到github pages</h3><p>首先需要为项目准备一个github仓库。</p>
+<p>然后，在项目目录下新建deploy.sh文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当发生错误时中止脚本</span></span><br><span class="line"><span class="built_in">set</span> -e</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建</span></span><br><span class="line">yarn build</span><br><span class="line"></span><br><span class="line"><span class="comment"># cd 到构建输出的目录下 </span></span><br><span class="line"><span class="built_in">cd</span> dist</span><br><span class="line"></span><br><span class="line">git init</span><br><span class="line">git add -A</span><br><span class="line">git commit -m <span class="string">&#x27;deploy&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署到 https://&lt;USERNAME&gt;.github.io/&lt;REPO&gt;</span></span><br><span class="line">git push -f git@github.com:&lt;USERNAME&gt;/&lt;PROJECT-NAME&gt;.git master:gh-pages</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> -</span><br></pre></td></tr></table></figure>
+
+
+<p>使用命令<code>./deploy.sh</code>即可一键部署到项目仓库的<code>gh-pages</code>分支。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>kpt
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="http://kpt.ink/2021/07/05/Vue-Typescript-Project/">http://kpt.ink/2021/07/05/Vue-Typescript-Project/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2021-09-26</p></div> 
+    <div class="post-meta__cats"><a href="/tags/Vue/" class="post-tags__link button"># Vue</a><a href="/tags/TypeScript/" class="post-tags__link button"># TypeScript</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2021/08/01/JavaScript-Data-Types/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            JavaScript数据类型
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2021/07/01/JQuery%E5%B8%B8%E7%94%A8API%E6%95%B4%E7%90%86/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            JQuery常用API整理
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2019&nbsp;-&nbsp;2021 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
