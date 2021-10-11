@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    <link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+
+
+    <!-- meta -->
+
+
+<title>HTTP 状态码 | kpt.ink</title>
+
+
+    <meta name="keywords" content="网络">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="HTTP状态码（HTTP Status Code）是用来表示HTTP请求响应状态的3位数字代码。 有五类状态码： 1xx 消息表示请求已被接受，需要继续处理。这类响应是临时响应。 100 continue表示服务器已经接收到请求头，并且客户端应继续发送请求主体。 101 Switching Protocols服务器已经理解了客户端的请求，并将通过Upgrade消息头通知客户端采用不同的协议来完成这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP 状态码">
+<meta property="og:url" content="http://kpt.ink/2021/10/11/HTTP-Status-Code/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="HTTP状态码（HTTP Status Code）是用来表示HTTP请求响应状态的3位数字代码。 有五类状态码： 1xx 消息表示请求已被接受，需要继续处理。这类响应是临时响应。 100 continue表示服务器已经接收到请求头，并且客户端应继续发送请求主体。 101 Switching Protocols服务器已经理解了客户端的请求，并将通过Upgrade消息头通知客户端采用不同的协议来完成这">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-11T14:20:22.888Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/github.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/agate.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')!==-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+         
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        HTTP 状态码
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/10/" class="post-meta__date button">2021-10-11</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1xx-%E6%B6%88%E6%81%AF"><span class="toc-number">1.</span> <span class="toc-text">1xx 消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#100-continue"><span class="toc-number">1.1.</span> <span class="toc-text">100 continue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#101-Switching-Protocols"><span class="toc-number">1.2.</span> <span class="toc-text">101 Switching Protocols</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#102-processing"><span class="toc-number">1.3.</span> <span class="toc-text">102 processing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#103-Early-Hints"><span class="toc-number">1.4.</span> <span class="toc-text">103 Early Hints</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2xx-%E6%88%90%E5%8A%9F"><span class="toc-number">2.</span> <span class="toc-text">2xx 成功</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#200-OK"><span class="toc-number">2.1.</span> <span class="toc-text">200 OK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#201-Created"><span class="toc-number">2.2.</span> <span class="toc-text">201 Created</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#202-Accepted"><span class="toc-number">2.3.</span> <span class="toc-text">202 Accepted</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#203-Non-Authoritative-Information"><span class="toc-number">2.4.</span> <span class="toc-text">203 Non-Authoritative Information</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#204-No-Content"><span class="toc-number">2.5.</span> <span class="toc-text">204 No Content</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#206-Partial-Content"><span class="toc-number">2.6.</span> <span class="toc-text">206 Partial Content</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3xx-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">3.</span> <span class="toc-text">3xx 重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#301-Moved-Permanently"><span class="toc-number">3.1.</span> <span class="toc-text">301 Moved Permanently</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#302-Found"><span class="toc-number">3.2.</span> <span class="toc-text">302 Found</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#303-See-Other"><span class="toc-number">3.3.</span> <span class="toc-text">303 See Other</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#304-Not-Modified"><span class="toc-number">3.4.</span> <span class="toc-text">304 Not Modified</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#305-Use-Proxy"><span class="toc-number">3.5.</span> <span class="toc-text">305 Use Proxy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4xx-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%99%E8%AF%AF"><span class="toc-number">4.</span> <span class="toc-text">4xx 客户端错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#400-Bad-Request"><span class="toc-number">4.1.</span> <span class="toc-text">400 Bad Request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#401-Unauthorized"><span class="toc-number">4.2.</span> <span class="toc-text">401 Unauthorized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#403-Forbidden"><span class="toc-number">4.3.</span> <span class="toc-text">403 Forbidden</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#404-Not-Found"><span class="toc-number">4.4.</span> <span class="toc-text">404 Not Found</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#405-Method-Not-Allowed"><span class="toc-number">4.5.</span> <span class="toc-text">405 Method Not Allowed</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#415-Unsupported-Media-Type"><span class="toc-number">4.6.</span> <span class="toc-text">415 Unsupported Media Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#429-Too-Many-Requests"><span class="toc-number">4.7.</span> <span class="toc-text">429 Too Many Requests</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5xx-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF"><span class="toc-number">5.</span> <span class="toc-text">5xx 服务器错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#500-Internal-Server-Error"><span class="toc-number">5.1.</span> <span class="toc-text">500 Internal Server Error</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#502-Bad-Gateway"><span class="toc-number">5.2.</span> <span class="toc-text">502 Bad Gateway</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1xx-%E6%B6%88%E6%81%AF"><span class="toc-number">1.</span> <span class="toc-text">1xx 消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#100-continue"><span class="toc-number">1.1.</span> <span class="toc-text">100 continue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#101-Switching-Protocols"><span class="toc-number">1.2.</span> <span class="toc-text">101 Switching Protocols</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#102-processing"><span class="toc-number">1.3.</span> <span class="toc-text">102 processing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#103-Early-Hints"><span class="toc-number">1.4.</span> <span class="toc-text">103 Early Hints</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2xx-%E6%88%90%E5%8A%9F"><span class="toc-number">2.</span> <span class="toc-text">2xx 成功</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#200-OK"><span class="toc-number">2.1.</span> <span class="toc-text">200 OK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#201-Created"><span class="toc-number">2.2.</span> <span class="toc-text">201 Created</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#202-Accepted"><span class="toc-number">2.3.</span> <span class="toc-text">202 Accepted</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#203-Non-Authoritative-Information"><span class="toc-number">2.4.</span> <span class="toc-text">203 Non-Authoritative Information</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#204-No-Content"><span class="toc-number">2.5.</span> <span class="toc-text">204 No Content</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#206-Partial-Content"><span class="toc-number">2.6.</span> <span class="toc-text">206 Partial Content</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3xx-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">3.</span> <span class="toc-text">3xx 重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#301-Moved-Permanently"><span class="toc-number">3.1.</span> <span class="toc-text">301 Moved Permanently</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#302-Found"><span class="toc-number">3.2.</span> <span class="toc-text">302 Found</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#303-See-Other"><span class="toc-number">3.3.</span> <span class="toc-text">303 See Other</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#304-Not-Modified"><span class="toc-number">3.4.</span> <span class="toc-text">304 Not Modified</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#305-Use-Proxy"><span class="toc-number">3.5.</span> <span class="toc-text">305 Use Proxy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4xx-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%99%E8%AF%AF"><span class="toc-number">4.</span> <span class="toc-text">4xx 客户端错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#400-Bad-Request"><span class="toc-number">4.1.</span> <span class="toc-text">400 Bad Request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#401-Unauthorized"><span class="toc-number">4.2.</span> <span class="toc-text">401 Unauthorized</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#403-Forbidden"><span class="toc-number">4.3.</span> <span class="toc-text">403 Forbidden</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#404-Not-Found"><span class="toc-number">4.4.</span> <span class="toc-text">404 Not Found</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#405-Method-Not-Allowed"><span class="toc-number">4.5.</span> <span class="toc-text">405 Method Not Allowed</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#415-Unsupported-Media-Type"><span class="toc-number">4.6.</span> <span class="toc-text">415 Unsupported Media Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#429-Too-Many-Requests"><span class="toc-number">4.7.</span> <span class="toc-text">429 Too Many Requests</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5xx-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF"><span class="toc-number">5.</span> <span class="toc-text">5xx 服务器错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#500-Internal-Server-Error"><span class="toc-number">5.1.</span> <span class="toc-text">500 Internal Server Error</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#502-Bad-Gateway"><span class="toc-number">5.2.</span> <span class="toc-text">502 Bad Gateway</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>HTTP状态码（HTTP Status Code）是用来表示HTTP请求响应状态的3位数字代码。</p>
+<p>有五类状态码：</p>
+<h2 id="1xx-消息"><a href="#1xx-消息" class="headerlink" title="1xx 消息"></a>1xx 消息</h2><p>表示请求已被接受，需要继续处理。这类响应是临时响应。</p>
+<h3 id="100-continue"><a href="#100-continue" class="headerlink" title="100 continue"></a>100 continue</h3><p>表示服务器已经接收到请求头，并且客户端应继续发送请求主体。</p>
+<h3 id="101-Switching-Protocols"><a href="#101-Switching-Protocols" class="headerlink" title="101 Switching Protocols"></a>101 Switching Protocols</h3><p>服务器已经理解了客户端的请求，并将通过Upgrade消息头通知客户端采用不同的协议来完成这个请求。</p>
+<h3 id="102-processing"><a href="#102-processing" class="headerlink" title="102 processing"></a>102 processing</h3><p>WebDAV请求可能包含许多涉及文件操作的子请求，需要很长时间才能完成请求。</p>
+<h3 id="103-Early-Hints"><a href="#103-Early-Hints" class="headerlink" title="103 Early Hints"></a>103 Early Hints</h3><p>用来在最终的HTTP消息之前返回一些响应头。</p>
+<h2 id="2xx-成功"><a href="#2xx-成功" class="headerlink" title="2xx 成功"></a>2xx 成功</h2><h3 id="200-OK"><a href="#200-OK" class="headerlink" title="200 OK"></a>200 OK</h3><p>请求成功。</p>
+<h3 id="201-Created"><a href="#201-Created" class="headerlink" title="201 Created"></a>201 Created</h3><p>该请求已成功，并因此创建了一些新的资源。这通常是POST请求，或者某些PUT请求之后返回的响应。</p>
+<h3 id="202-Accepted"><a href="#202-Accepted" class="headerlink" title="202 Accepted"></a>202 Accepted</h3><p>请求已经收到，但还未响应，没有结果。最终该请求可能会也可能不会被执行。</p>
+<h3 id="203-Non-Authoritative-Information"><a href="#203-Non-Authoritative-Information" class="headerlink" title="203 Non-Authoritative Information"></a>203 Non-Authoritative Information</h3><p>服务器是一个转换代理服务器（transforming proxy，例如网络加速器），以<code>200 OK</code>状态码为起源，但回应了原始响应的修改版本。</p>
+<h3 id="204-No-Content"><a href="#204-No-Content" class="headerlink" title="204 No Content"></a>204 No Content</h3><p>服务器成功处理了请求，没有返回任何内容。</p>
+<h3 id="206-Partial-Content"><a href="#206-Partial-Content" class="headerlink" title="206 Partial Content"></a>206 Partial Content</h3><p>服务器已经成功处理了部分GET请求，类似于FlashGet或者迅雷这类的HTTP下载工具都是使用此类响应实现断点续传或者将一个大文档分解为多个下载段同时下载。</p>
+<h2 id="3xx-重定向"><a href="#3xx-重定向" class="headerlink" title="3xx 重定向"></a>3xx 重定向</h2><p>此类状态码代表客户端需要采取进一步的操作才能完成请求。</p>
+<h3 id="301-Moved-Permanently"><a href="#301-Moved-Permanently" class="headerlink" title="301 Moved Permanently"></a>301 Moved Permanently</h3><p>被请求的资源已永久移动到新位置。</p>
+<h3 id="302-Found"><a href="#302-Found" class="headerlink" title="302 Found"></a>302 Found</h3><p>要求客户端执行临时重定向。</p>
+<h3 id="303-See-Other"><a href="#303-See-Other" class="headerlink" title="303 See Other"></a>303 See Other</h3><p>对应当前请求的响应可以在另一个URI上被找到，当响应于POST（或PUT / DELETE）接收到响应时，客户端应该假定服务器已经收到数据，并且应该使用单独的GET消息发出重定向。</p>
+<h3 id="304-Not-Modified"><a href="#304-Not-Modified" class="headerlink" title="304 Not Modified"></a>304 Not Modified</h3><p>表示资源在由请求头中的<code>If-Modified-Since</code>或<code>If-None-Match</code>参数指定的这一版本之后，未曾被修改。在这种情况下，由于客户端仍然具有以前下载的副本，因此不需要重新传输资源。</p>
+<h3 id="305-Use-Proxy"><a href="#305-Use-Proxy" class="headerlink" title="305 Use Proxy"></a>305 Use Proxy</h3><p>被请求的资源必须通过指定的代理才能被访问。</p>
+<h2 id="4xx-客户端错误"><a href="#4xx-客户端错误" class="headerlink" title="4xx 客户端错误"></a>4xx 客户端错误</h2><p>这类的状态码代表了客户端看起来可能发生了错误，妨碍了服务器的处理。</p>
+<h3 id="400-Bad-Request"><a href="#400-Bad-Request" class="headerlink" title="400 Bad Request"></a>400 Bad Request</h3><p>由于明显的客户端错误（例如，格式错误的请求语法，太大的大小，无效的请求消息或欺骗性路由请求），服务器不能或不会处理该请求。</p>
+<h3 id="401-Unauthorized"><a href="#401-Unauthorized" class="headerlink" title="401 Unauthorized"></a>401 Unauthorized</h3><p>“未认证”，即用户没有必要的凭据。该状态码表示当前请求需要用户验证。</p>
+<h3 id="403-Forbidden"><a href="#403-Forbidden" class="headerlink" title="403 Forbidden"></a>403 Forbidden</h3><p>服务器已经理解请求，但是拒绝执行它。</p>
+<h3 id="404-Not-Found"><a href="#404-Not-Found" class="headerlink" title="404 Not Found"></a>404 Not Found</h3><p>请求失败，请求所希望得到的资源未被在服务器上发现，但允许用户的后续请求。</p>
+<h3 id="405-Method-Not-Allowed"><a href="#405-Method-Not-Allowed" class="headerlink" title="405 Method Not Allowed"></a>405 Method Not Allowed</h3><p>请求行中指定的请求方法不能被用于请求相应的资源。该响应必须返回一个<code>Allow</code>头信息用以表示出当前资源能够接受的请求方法的列表。例如，需要通过POST呈现数据的表单上的GET请求，或只读资源上的PUT请求。</p>
+<p>鉴于PUT，DELETE方法会对服务器上的资源进行写操作，因而绝大部分的网页服务器都不支持或者在默认配置下不允许上述请求方法，对于此类请求均会返回405错误。</p>
+<h3 id="415-Unsupported-Media-Type"><a href="#415-Unsupported-Media-Type" class="headerlink" title="415 Unsupported Media Type"></a>415 Unsupported Media Type</h3><p>对于当前请求的方法和所请求的资源，请求中提交的互联网媒体类型并不是服务器中所支持的格式，因此请求被拒绝。例如，客户端将图像上传格式为<code>svg</code>，但服务器要求图像使用上传格式为<code>jpg</code>。</p>
+<h3 id="429-Too-Many-Requests"><a href="#429-Too-Many-Requests" class="headerlink" title="429 Too Many Requests"></a>429 Too Many Requests</h3><p>用户在给定的时间内发送了太多的请求。旨在用于网络限速。</p>
+<h2 id="5xx-服务器错误"><a href="#5xx-服务器错误" class="headerlink" title="5xx 服务器错误"></a>5xx 服务器错误</h2><p>表示服务端发生了错误。</p>
+<h3 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500 Internal Server Error"></a>500 Internal Server Error</h3><p>服务端发生了错误。</p>
+<h3 id="502-Bad-Gateway"><a href="#502-Bad-Gateway" class="headerlink" title="502 Bad Gateway"></a>502 Bad Gateway</h3><p>作为<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E5%85%B3">网关</a>或者<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8">代理</a>工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>完整HTTP状态码参考 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81">维基百科 - HTTP状态码</a>。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>kpt
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="http://kpt.ink/2021/10/11/HTTP-Status-Code/">http://kpt.ink/2021/10/11/HTTP-Status-Code/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2021-10-11</p></div> 
+    <div class="post-meta__cats"><a href="/tags/%E7%BD%91%E7%BB%9C/" class="post-tags__link button"># 网络</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2021/10/03/Promise-Basic/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Promise基础
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2019&nbsp;-&nbsp;2021 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
