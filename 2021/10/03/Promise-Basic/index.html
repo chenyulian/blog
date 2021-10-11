@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    <link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+
+
+    <!-- meta -->
+
+
+<title>Promise基础 | kpt.ink</title>
+
+
+    <meta name="keywords" content="JavaScript">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="异步编程同步与异步在JavaScript中，许多任务的运行的模式是同步（synchronous）的，代码按照顺序一行一行执行，执行完一个任务再执行下一个。 但是，有些任务不适合这种运行模式：  发起一个网络请求，得到响应后对返回数据进行一些处理  加载一个script文件，文件加载完成之后调用script文件中的一些方法   由于这些任务的执行耗时可能较长，导致排在它后面的任务需要等待它完成之后才">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Promise基础">
+<meta property="og:url" content="http://kpt.ink/2021/10/03/Promise-Basic/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="异步编程同步与异步在JavaScript中，许多任务的运行的模式是同步（synchronous）的，代码按照顺序一行一行执行，执行完一个任务再执行下一个。 但是，有些任务不适合这种运行模式：  发起一个网络请求，得到响应后对返回数据进行一些处理  加载一个script文件，文件加载完成之后调用script文件中的一些方法   由于这些任务的执行耗时可能较长，导致排在它后面的任务需要等待它完成之后才">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-11T03:19:08.644Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/github.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/agate.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')!==-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+         
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Promise基础
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/10/" class="post-meta__date button">2021-10-03</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">异步编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5"><span class="toc-number">1.1.</span> <span class="toc-text">同步与异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">JS异步操作的几种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">Promise的意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Promise"><span class="toc-number">3.</span> <span class="toc-text">使用Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAPromise"><span class="toc-number">3.1.</span> <span class="toc-text">创建Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">3.2.</span> <span class="toc-text">Promise的状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%93%8D%E4%BD%9C"><span class="toc-number">3.3.</span> <span class="toc-text">链式操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#then%E8%BF%94%E5%9B%9E%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86%E6%8A%80%E5%B7%A7"><span class="toc-number">3.4.</span> <span class="toc-text">then返回值的处理技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-all"><span class="toc-number">3.5.</span> <span class="toc-text">Promise.all</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-race"><span class="toc-number">3.6.</span> <span class="toc-text">Promise.race</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">3.7.</span> <span class="toc-text">错误处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#async%E5%92%8Cawait"><span class="toc-number">4.</span> <span class="toc-text">async和await</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">异步编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5"><span class="toc-number">1.1.</span> <span class="toc-text">同步与异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">JS异步操作的几种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">Promise的意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Promise"><span class="toc-number">3.</span> <span class="toc-text">使用Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAPromise"><span class="toc-number">3.1.</span> <span class="toc-text">创建Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">3.2.</span> <span class="toc-text">Promise的状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%93%8D%E4%BD%9C"><span class="toc-number">3.3.</span> <span class="toc-text">链式操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#then%E8%BF%94%E5%9B%9E%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86%E6%8A%80%E5%B7%A7"><span class="toc-number">3.4.</span> <span class="toc-text">then返回值的处理技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-all"><span class="toc-number">3.5.</span> <span class="toc-text">Promise.all</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-race"><span class="toc-number">3.6.</span> <span class="toc-text">Promise.race</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">3.7.</span> <span class="toc-text">错误处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#async%E5%92%8Cawait"><span class="toc-number">4.</span> <span class="toc-text">async和await</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><h3 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h3><p>在JavaScript中，许多任务的运行的模式是同步（synchronous）的，代码按照顺序一行一行执行，执行完一个任务再执行下一个。</p>
+<p>但是，有些任务不适合这种运行模式：</p>
+<ul>
+<li><p>发起一个网络请求，得到响应后对返回数据进行一些处理</p>
+</li>
+<li><p>加载一个script文件，文件加载完成之后调用script文件中的一些方法</p>
+</li>
+</ul>
+<p>由于这些任务的执行耗时可能较长，导致排在它后面的任务需要等待它完成之后才能执行，这就形成了阻塞（blocking）。</p>
+<p>一些语言对此类需要耗时的任务的解决方式是多线程。而JavaScript是单线程执行的，它对此类任务的解决方式是异步（asynchronous）。</p>
+<h3 id="JS异步操作的几种方式"><a href="#JS异步操作的几种方式" class="headerlink" title="JS异步操作的几种方式"></a>JS异步操作的<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html">几种方式</a></h3><ul>
+<li><p>回调函数</p>
+</li>
+<li><p>事件监听</p>
+</li>
+<li><p>发布/订阅模式</p>
+</li>
+<li><p>Promise</p>
+</li>
+</ul>
+<h2 id="Promise的意义"><a href="#Promise的意义" class="headerlink" title="Promise的意义"></a>Promise的意义</h2><p>我们使用一个通过<code>ajax</code>发送请求的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">  url: <span class="string">&quot;http://localhost:8080/data.json&quot;</span>,</span><br><span class="line">  <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 处理data的逻辑</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;处理返回数据&#x27;</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>处理<code>data</code>的逻辑，需要放在<code>success</code>函数体内，否则这段代码是访问不到<code>data</code>的。这样会导致<strong>处理数据的代码与发送请求代码耦合</strong> ，这又会带来另一个问题：如果再发起一个请求，需要用到<code>data</code>，这个请求代码需要写在<code>success</code>内，多层嵌套会出现回调地狱。</p>
+<p>使用Promise的话，上面的代码可改写为：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  $.ajax(&#123;</span><br><span class="line">    url: <span class="string">&quot;http://localhost:8080/data.json&quot;</span>,</span><br><span class="line">    <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">      resolve(data); <span class="comment">// 这里不关心对数据的处理逻辑，只改变p的状态</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">p.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// p成功之后，处理data</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<p>Promise不关心请求成功之后对数据的处理逻辑，它只负责用<code>resolve</code>或者<code>reject</code>来改变Promise状态。</p>
+<p><code>promise</code>直译为承诺，我们可以这样理解：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 进行一些异步操作</span></span><br><span class="line">  <span class="comment">// 承诺在某些情况下（例如网络请求成功）调用resolve</span></span><br><span class="line">  <span class="comment">// 承诺在某些情况下（例如请求失败）调用reject</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 兑现承诺</span></span><br><span class="line">p.then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;&#125;, <span class="function"><span class="params">error</span> =&gt;</span> &#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="使用Promise"><a href="#使用Promise" class="headerlink" title="使用Promise"></a>使用Promise</h2><h3 id="创建Promise"><a href="#创建Promise" class="headerlink" title="创建Promise"></a>创建Promise</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="comment">/* 异步操作成功 */</span>) &#123;</span><br><span class="line">    resolve(value);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">/* 异步操作失败 */</span></span><br><span class="line">    reject(<span class="keyword">new</span> <span class="built_in">Error</span>());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>Promise构造方法接收一个函数参数，叫** 处理器函数** （executor function），处理器函数接收两个函数参数：<code>resolve</code>和<code>reject</code>。当异步任务顺利完成且返回结果值时，会调用 <code>resolve</code> 函数；而当异步任务失败且返回失败原因（通常是一个错误对象）时，会调用<code>reject</code> 函数。</p>
+<p>注意，处理器函数中的代码是立即执行的：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;new Promise&#x27;</span>)</span><br><span class="line">  resolve(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;finifsh&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先输出&#x27;new Promise&#x27;, 然后输出&#x27;finifsh&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>处理器函数中可以放那些耗时长的任务，然后等任务完成再使用<code>resolve</code>或<code>reject</code>改变状态。</p>
+<h3 id="Promise的状态"><a href="#Promise的状态" class="headerlink" title="Promise的状态"></a>Promise的状态</h3><p>Promise对象通过自身的状态来控制异步操作。Promise实例具有三种状态：</p>
+<ul>
+<li><p>异步操作未完成（<code>pending</code>）</p>
+</li>
+<li><p>异步操作成功（<code>fullfilled</code>）</p>
+</li>
+<li><p>异步操作失败（<code>rejected</code>）</p>
+</li>
+</ul>
+<p>这三种状态的变化途径有两种：</p>
+<ol>
+<li><p>从未完成变成成功，Promise实例会传回一个值，状态变为<code>fullfilled</code>。</p>
+</li>
+<li><p>从未完成变成失败，Promise实例会抛出一个错误，状态变为<code>rejected</code>。</p>
+</li>
+</ol>
+<p>注意，Promise的状态由<code>pending</code>变为<code>fullfilled / rejected</code>二者之一后，就已敲定了，不能再改变。</p>
+<figure class="highlight plain"><figcaption><span>JSX</span></figcaption><table><tr><td class="code"><pre><span class="line">new Promise((resolve, reject) &#x3D;&gt; &#123;</span><br><span class="line">  resolve(&#39;success&#39;)</span><br><span class="line">  reject(&#39;reject&#39;) &#x2F;&#x2F; 无效</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>Promise实例的<code>then</code>方法，用来添加回调函数。then方法接收两个参数，第一个是异步操作成功时的回调函数，第二个是异步操作失败时的回调函数（可以省略）。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 异步操作成功时（fullfilled），会执行f1</span></span><br><span class="line"><span class="comment">// 异步操作失败（rejected），会执行f2</span></span><br><span class="line">p.then(f1, f2); </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="链式操作"><a href="#链式操作" class="headerlink" title="链式操作"></a>链式操作</h3><p><code>then</code>函数返回一个新的Promise实例，因此，可以链式操作Promise：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">ajax(url)</span><br><span class="line">  .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(res)</span><br><span class="line">      <span class="keyword">return</span> ajax(url1)</span><br><span class="line">  &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(res)</span><br><span class="line">      <span class="keyword">return</span> ajax(url2)</span><br><span class="line">  &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">console</span>.log(res))</span><br></pre></td></tr></table></figure>
+
+
+<p>这解决了回调地狱的问题。</p>
+<h3 id="then返回值的处理技巧"><a href="#then返回值的处理技巧" class="headerlink" title="then返回值的处理技巧"></a>then返回值的处理技巧</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  resolve(<span class="string">&quot;p1成功了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">let</span> p2 = p1</span><br><span class="line">  .then(</span><br><span class="line">    (msg) =&gt; &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;p2成功了&quot;</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    (error) =&gt; &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(error);</span><br><span class="line">    &#125;</span><br><span class="line">  )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p><code>p2</code>是<code>p1.then()</code>返回的新的Promise对象，那么<code>p2</code>的状态是什么呢？</p>
+<ul>
+<li><p>如果<code>p1</code>的回调返回一个字符串，那么<code>p2</code>的状态是成功；</p>
+</li>
+<li><p>如果<code>p1</code>的回调返回一个Promise对象，那么<code>p2</code>的状态就是返回的这个Promise对象的状态。</p>
+</li>
+</ul>
+<h3 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all"></a>Promise.all</h3><p><code>Promise.all()</code>方法用于将多个Promise实例，包装成一个新的Promise实例。</p>
+<figure class="highlight plain"><figcaption><span>JSX</span></figcaption><table><tr><td class="code"><pre><span class="line">const p &#x3D; Promise.all([p1, p2, p3])</span><br></pre></td></tr></table></figure>
+
+
+<p><code>p</code>的状态由<code>p1</code>、<code>p2</code>、<code>p3</code>的状态共同决定，具体规则是：</p>
+<ol>
+<li><p>只有<code>p1</code>、<code>p2</code>、<code>p3</code>的状态都为<code>fullfilled</code>，p的状态才为<code>fullfilled</code>，此时<code>p1</code>、<code>p2</code>、<code>p3</code>的返回值组成一个数组，传给<code>p</code>的回调函数；</p>
+</li>
+<li><p>只要<code>p2</code>、<code>p2</code>、<code>p3</code>之中有一个被<code>rejected</code>，p的状态就变为<code>rejected</code>，此时第一个被<code>reject</code>的实例的返回值，会传给p的回调函数。</p>
+</li>
+</ol>
+<h3 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race"></a>Promise.race</h3><p><code>Promise.race()</code>和<code>all()</code>类似，同样是将多个Promise实例包装成一个新的Promise实例。</p>
+<figure class="highlight plain"><figcaption><span>JSX</span></figcaption><table><tr><td class="code"><pre><span class="line">const p &#x3D; Promise.race([p1, p2, p3])</span><br></pre></td></tr></table></figure>
+
+
+<p><code>p</code>的状态变化规则：</p>
+<p>只要<code>p1</code>、<code>p2</code>、<code>p3</code>之中有一个实例率先改变状态，<code>p</code>的状态就会跟着改变。那个率先改变的Promise实例的返回值，会传给<code>p</code>的回调函数。</p>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch">promise.prototype.catch()</a>捕获异常。如果Promise对象的<code>then</code>方法中没有传失败状态执行的回调函数，那么可以在<code>.catch()</code>中来捕获失败时抛出的异常。</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally">promise.prototype.finally()</a>则是无论成功或失败都会执行的回调函数。</p>
+<h2 id="async和await"><a href="#async和await" class="headerlink" title="async和await"></a>async和await</h2><p><code>async</code>和<code>await</code>是Promise的语法糖。</p>
+<p>给一个函数加上<code>async</code>关键字，这个函数返回的就是一个Promise对象。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;1&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(test()) <span class="comment">// -&gt; Promise &#123;&lt;resolved&gt;: &quot;1&quot;&#125; // 默认是resolved状态</span></span><br></pre></td></tr></table></figure>
+
+
+<p><code>await</code> 就是将函数返回值使用 <code>Promise.resolve()</code> 包裹了下，和 <code>then</code> 中处理返回值一样，并且 <code>await</code> 只能配套 <code>async</code> 使用。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> value = <span class="keyword">await</span> sleep()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><code>async</code>和<code>await</code>能更一步优化回调地狱。Promise是把层层嵌套的回调“展开”成扁平的链式调用，<code>async / await</code>把链式调用都省了，让我们可以像写同步代码那样写异步代码。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">getLessons</span>(<span class="params">username</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> user = <span class="keyword">await</span> ajax(url, username);</span><br><span class="line">  <span class="keyword">let</span> lessons = <span class="keyword">await</span> ajax(url, user.id); <span class="comment">// 上一个promise resolve后，才会执行这个</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise">MDN - Promise</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function">MDN - async函数</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>kpt
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="http://kpt.ink/2021/10/03/Promise-Basic/">http://kpt.ink/2021/10/03/Promise-Basic/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2021-10-11</p></div> 
+    <div class="post-meta__cats"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2021/09/20/Vue3-Composition-Quickview/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            快速了解Vue 3 Composition API
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2019&nbsp;-&nbsp;2021 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
