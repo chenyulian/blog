@@ -31,15 +31,15 @@
 
     <!-- OpenGraph -->
  
-    <meta name="description" content="函数上下文this指函数调用相关联的对象，称之为函数上下文。可以在函数内部获取到。 函数上下文是来自面向对象语言（如Java）的概念，在面向对象语言中，方法定义在类内部，因此需要一个机制来获取当前类的实例的一些信息，这就产生了this。this通常指向定义当前方法的类的实例 。不过，在JavaScript中，函数并不和对象绑定，是可以单独调用的。除了作为一个方法（method）来调用，还有一些其他">
+    <meta name="description" content="JavaScript中的this，和面向对象语言中的this有些不同……">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript中的this">
 <meta property="og:url" content="http://kpt.ink/2021/08/05/JavaScript%E4%B8%AD%E7%9A%84this/index.html">
 <meta property="og:site_name" content="kpt.ink">
-<meta property="og:description" content="函数上下文this指函数调用相关联的对象，称之为函数上下文。可以在函数内部获取到。 函数上下文是来自面向对象语言（如Java）的概念，在面向对象语言中，方法定义在类内部，因此需要一个机制来获取当前类的实例的一些信息，这就产生了this。this通常指向定义当前方法的类的实例 。不过，在JavaScript中，函数并不和对象绑定，是可以单独调用的。除了作为一个方法（method）来调用，还有一些其他">
+<meta property="og:description" content="JavaScript中的this，和面向对象语言中的this有些不同……">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-08-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-09-21T14:40:20.120Z">
+<meta property="article:modified_time" content="2021-10-11T14:30:43.993Z">
 <meta property="article:author" content="kinpture">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary_large_image">
@@ -175,7 +175,9 @@
 <article class="post content-card">
     <div class="post__header"></div>
     <div class="post__content">
-        <h2 id="函数上下文"><a href="#函数上下文" class="headerlink" title="函数上下文"></a>函数上下文</h2><p><code>this</code>指函数调用相关联的对象，称之为函数上下文。可以在函数内部获取到。</p>
+        <p>JavaScript中的<code>this</code>，和面向对象语言中的<code>this</code>有些不同……</p>
+<a id="more"></a>
+<h2 id="函数上下文"><a href="#函数上下文" class="headerlink" title="函数上下文"></a>函数上下文</h2><p><code>this</code>指函数调用相关联的对象，称之为函数上下文。可以在函数内部获取到。</p>
 <p>函数上下文是来自面向对象语言（如Java）的概念，在面向对象语言中，方法定义在类内部，因此需要一个机制来获取当前类的实例的一些信息，这就产生了<code>this</code>。<code>this</code>通常指向定义当前方法的<strong>类的实例</strong> 。不过，在JavaScript中，函数并不和对象绑定，是可以单独调用的。除了作为一个方法（method）来调用，还有一些其他的调用方法。根据调用方法的不同，<code>this</code>的值也不同。也就是说，JavaScript中<code>this</code>的值是在调用时计算出来的。</p>
 <h2 id="调用函数的方法"><a href="#调用函数的方法" class="headerlink" title="调用函数的方法"></a>调用函数的方法</h2><p>函数的调用方法有以下几种：</p>
 <ol>
@@ -290,7 +292,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>updated at 2021-09-21</p></div> 
+    <div class="post-footer__meta"><p>updated at 2021-10-11</p></div> 
     <div class="post-meta__cats"><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a></div> 
 </article>
 

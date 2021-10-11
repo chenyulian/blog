@@ -31,15 +31,15 @@
 
     <!-- OpenGraph -->
  
-    <meta name="description" content="异步编程同步与异步在JavaScript中，许多任务的运行的模式是同步（synchronous）的，代码按照顺序一行一行执行，执行完一个任务再执行下一个。 但是，有些任务不适合这种运行模式：  发起一个网络请求，得到响应后对返回数据进行一些处理  加载一个script文件，文件加载完成之后调用script文件中的一些方法   由于这些任务的执行耗时可能较长，导致排在它后面的任务需要等待它完成之后才">
+    <meta name="description" content="Promise 是JavaScript异步编程的一种解决方案。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Promise基础">
 <meta property="og:url" content="http://kpt.ink/2021/10/03/Promise-Basic/index.html">
 <meta property="og:site_name" content="kpt.ink">
-<meta property="og:description" content="异步编程同步与异步在JavaScript中，许多任务的运行的模式是同步（synchronous）的，代码按照顺序一行一行执行，执行完一个任务再执行下一个。 但是，有些任务不适合这种运行模式：  发起一个网络请求，得到响应后对返回数据进行一些处理  加载一个script文件，文件加载完成之后调用script文件中的一些方法   由于这些任务的执行耗时可能较长，导致排在它后面的任务需要等待它完成之后才">
+<meta property="og:description" content="Promise 是JavaScript异步编程的一种解决方案。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-10-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-11T03:19:08.644Z">
+<meta property="article:modified_time" content="2021-10-11T14:29:54.130Z">
 <meta property="article:author" content="kinpture">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary_large_image">
@@ -175,7 +175,9 @@
 <article class="post content-card">
     <div class="post__header"></div>
     <div class="post__content">
-        <h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><h3 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h3><p>在JavaScript中，许多任务的运行的模式是同步（synchronous）的，代码按照顺序一行一行执行，执行完一个任务再执行下一个。</p>
+        <p>Promise 是JavaScript异步编程的一种解决方案。</p>
+<a id="more"></a>
+<h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><h3 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h3><p>在JavaScript中，许多任务的运行的模式是同步（synchronous）的，代码按照顺序一行一行执行，执行完一个任务再执行下一个。</p>
 <p>但是，有些任务不适合这种运行模式：</p>
 <ul>
 <li><p>发起一个网络请求，得到响应后对返回数据进行一些处理</p>
