@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    <link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+
+
+    <!-- meta -->
+
+
+<title>webpack入门 | kpt.ink</title>
+
+
+    <meta name="keywords" content="webpack">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="webpack是一个用于现代JavaScript应用程序的静态模块打包工具。本文通过一系列的代码实践（非常详细！）来学习webpack的概念、基本配置、如何使用loader和plugin。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack入门">
+<meta property="og:url" content="http://kpt.ink/2021/10/12/webpack-basic/index.html">
+<meta property="og:site_name" content="kpt.ink">
+<meta property="og:description" content="webpack是一个用于现代JavaScript应用程序的静态模块打包工具。本文通过一系列的代码实践（非常详细！）来学习webpack的概念、基本配置、如何使用loader和plugin。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/10/12/71ogCrfcKUasdtT.png">
+<meta property="article:published_time" content="2021-10-11T16:01:00.000Z">
+<meta property="article:modified_time" content="2021-10-12T12:46:45.584Z">
+<meta property="article:author" content="kinpture">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.loli.net/2021/10/12/71ogCrfcKUasdtT.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/github.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')===-1)this.media='all'">
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/agate.css" media="none" onload="if(getComputedStyle(document.documentElement).getPropertyValue('--color-mode').indexOf('dark')!==-1)this.media='all'">
+        
+    
+
+    
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">kpt.ink</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+         
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        webpack入门
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2021/10/" class="post-meta__date button">2021-10-12</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">webpack能做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">webpack的一些概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%89%8B%E5%AE%9E%E8%B7%B5webpack"><span class="toc-number">3.</span> <span class="toc-text">动手实践webpack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8webpack"><span class="toc-number">3.2.</span> <span class="toc-text">使用webpack</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">3.2.1.</span> <span class="toc-text">第一行代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%A4%8D%E6%9D%82%E4%B8%80%E4%BA%9B%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">3.2.2.</span> <span class="toc-text">使用复杂一些的语法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEwebpack"><span class="toc-number">3.3.</span> <span class="toc-text">配置webpack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E6%96%87%E4%BB%B6"><span class="toc-number">3.4.</span> <span class="toc-text">缓存文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP%E7%BC%93%E5%AD%98%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">3.4.1.</span> <span class="toc-text">HTTP缓存的意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#webpack%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98"><span class="toc-number">3.4.2.</span> <span class="toc-text">webpack更新缓存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8webpack%E6%8F%92%E4%BB%B6"><span class="toc-number">3.5.</span> <span class="toc-text">使用webpack插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8webpack-loader"><span class="toc-number">3.6.</span> <span class="toc-text">使用webpack loader</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="toc-number">4.</span> <span class="toc-text">其他工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">webpack能做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">webpack的一些概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%89%8B%E5%AE%9E%E8%B7%B5webpack"><span class="toc-number">3.</span> <span class="toc-text">动手实践webpack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8webpack"><span class="toc-number">3.2.</span> <span class="toc-text">使用webpack</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">3.2.1.</span> <span class="toc-text">第一行代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%A4%8D%E6%9D%82%E4%B8%80%E4%BA%9B%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">3.2.2.</span> <span class="toc-text">使用复杂一些的语法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEwebpack"><span class="toc-number">3.3.</span> <span class="toc-text">配置webpack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E6%96%87%E4%BB%B6"><span class="toc-number">3.4.</span> <span class="toc-text">缓存文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP%E7%BC%93%E5%AD%98%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">3.4.1.</span> <span class="toc-text">HTTP缓存的意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#webpack%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98"><span class="toc-number">3.4.2.</span> <span class="toc-text">webpack更新缓存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8webpack%E6%8F%92%E4%BB%B6"><span class="toc-number">3.5.</span> <span class="toc-text">使用webpack插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8webpack-loader"><span class="toc-number">3.6.</span> <span class="toc-text">使用webpack loader</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="toc-number">4.</span> <span class="toc-text">其他工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>webpack是一个用于现代JavaScript应用程序的静态模块打包工具。本文通过一系列的代码实践（非常详细！）来学习webpack的概念、基本配置、如何使用<code>loader</code>和<code>plugin</code>。</p>
+<a id="more"></a>
+<h2 id="webpack能做什么"><a href="#webpack能做什么" class="headerlink" title="webpack能做什么"></a>webpack能做什么</h2><p>这里有一张来自官方文档首页的图，来描述Webpack的核心功能：</p>
+<p><img src="https://i.loli.net/2021/10/12/71ogCrfcKUasdtT.png" alt="What Webpack do"></p>
+<p>实际上，webpack能做的事有很多：</p>
+<ul>
+<li><p>构建build：将一个或多个JS/CSS文件打包成对应的文件。</p>
+</li>
+<li><p>转译代码：将高版本的JS转译成低版本的JS以兼容。</p>
+</li>
+<li><p>代码压缩</p>
+</li>
+<li><p>代码分析</p>
+</li>
+</ul>
+<h2 id="webpack的一些概念"><a href="#webpack的一些概念" class="headerlink" title="webpack的一些概念"></a>webpack的一些概念</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://webpack.js.org/concepts/#entry">入口（entry）</a><br>入口起点（entry point）指示webpack应该使用哪个模块，来作为构建其内部依赖图的开始。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">&#x27;./path/to/my/entry/file.js&#x27;</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><a target="_blank" rel="noopener" href="https://webpack.js.org/concepts/#output">输出（output）</a><br>output属性表示在哪输出webpack创建的bundle（即打包好后的静态资源）。主要输出文件的默认值是<code>./dist/main.js</code>，其他生成文件默认放在<code>./dist</code>中。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">&#x27;./path/to/my/entry/file.js&#x27;</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">    filename: <span class="string">&#x27;my-first-webpack.bundle.js&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;；</span><br></pre></td></tr></table></figure></li>
+<li><a target="_blank" rel="noopener" href="https://webpack.js.org/concepts/#loaders">loader</a><br>webpack只能理解JavaScript和JSON文件，loader让webpack能够去处理其他类型的文件，并且将他们转为有效<a target="_blank" rel="noopener" href="https://webpack.docschina.org/concepts/modules/">模块</a>供程序使用，以及添加到依赖图中。<br>webpack的一个强大特性是支持通过<code>import</code>导入任何类型的模块。<br>loader有两个属性：<ul>
+<li><code>test</code>：哪些文件会被转换，这里传一个正则表达式</li>
+<li><code>use</code>：在转换时，应该用哪个<code>loader</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://webpack.js.org/concepts/#plugins">plugin</a><br>loader用于转换某些类型的模块，而插件可以做的事更多，包括：打包优化，资源管理，注入环境变量。<br>想要使用一个插件，你只需要 <code>require()</code> 它，然后把它添加到 <code>plugins</code> 数组中。</li>
+<li><a target="_blank" rel="noopener" href="https://webpack.js.org/concepts/#mode">模式（mode）</a><br>通过配置<code>mode</code>属性可以启用webpack在不同环境下的优化（内置的）。可以配置为<code>development</code>, <code>production</code> 或 <code>none</code>，默认是<code>production</code> 。</li>
+</ul>
+<h2 id="动手实践webpack"><a href="#动手实践webpack" class="headerlink" title="动手实践webpack"></a>动手实践webpack</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
+<li>创建一个项目：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> webpack-demo/</span><br><span class="line">yarn init</span><br></pre></td></tr></table></figure></li>
+<li>本地安装webpack：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install webpack --save-dev</span><br><span class="line">npm install webpack-cli --save-dev</span><br></pre></td></tr></table></figure>
+或者<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn add webpack --dev</span><br><span class="line">yarn add webpack-cli --dev</span><br></pre></td></tr></table></figure>
+注：<strong>不推荐全局安装webpack</strong> ，这样会使你项目中的webpack锁定到指定版本，在使用不同的webpack版本的项目中可能会导致构建失败。</li>
+</ol>
+<p>安装完成之后控制台会输出webpack的版本。本文写作时安装的版本是<code>webpack@5.58.1</code>和<code>webpack-cli@4.9.0</code>。</p>
+<h3 id="使用webpack"><a href="#使用webpack" class="headerlink" title="使用webpack"></a>使用webpack</h3><h4 id="第一行代码"><a href="#第一行代码" class="headerlink" title="第一行代码"></a>第一行代码</h4><p>创建<code>src/index.js</code>文件：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// src/index.js</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;hi&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>使用命令：<code>npx webpack</code>运行webpack，可以看到在根目录下出现了一个<code>dist</code>文件夹，里面有一个<code>main.js</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// dist/main.js</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;hi&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="使用复杂一些的语法"><a href="#使用复杂一些的语法" class="headerlink" title="使用复杂一些的语法"></a>使用复杂一些的语法</h4><p>尝试在<code>index.js</code>中添加复杂一些的代码：<br>创建<code>src/greeting.js</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// src/greeing.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="string">&#x27;hello webpack&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// src/index.js</span></span><br><span class="line"><span class="keyword">import</span> greeting <span class="keyword">from</span> <span class="string">&#x27;./greeting&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(greeting)</span><br></pre></td></tr></table></figure>
+<p>运行<code>npx webpack</code>，发现<code>main.js</code>的内容变成了：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="function">()=&gt;</span>&#123;<span class="string">&quot;use strict&quot;</span>;<span class="built_in">console</span>.log(<span class="string">&quot;hello webpack&quot;</span>)&#125;)();</span><br></pre></td></tr></table></figure>
+<p>我们可以得出，webpack帮我们把两个有依赖关系的JavaScript文件里的代码打包到一起了，并且添加了<code>&quot;use strict&quot;</code>，添加了立即执行函数。</p>
+<p>webpack会分析我们的代码，把模块化的代码打包到一起，并且把它们变成兼容低版本浏览器的代码。webpack还支持其他模块语法。</p>
+<p>注意webpack不会去修改<code>import</code>和<code>export</code>以外的部分，如果其他ES2015新特性想要兼容低版本浏览器，需要使用<a target="_blank" rel="noopener" href="https://babel.docschina.org/">Babel</a>等转译器。</p>
+<h3 id="配置webpack"><a href="#配置webpack" class="headerlink" title="配置webpack"></a>配置webpack</h3><p>webpack提供了许多配置项。<br>根目录下创建<code>webpack.config.js</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// 模式</span></span><br><span class="line">  mode: <span class="string">&#x27;development&#x27;</span>,</span><br><span class="line">  <span class="comment">// 入口</span></span><br><span class="line">  entry: <span class="string">&#x27;./src/index.js&#x27;</span>,</span><br><span class="line">  <span class="comment">// 输出</span></span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">&#x27;main.js&#x27;</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>使用配置文件构建：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx webpack --config webpack.config.js</span><br></pre></td></tr></table></figure>
+<h3 id="缓存文件"><a href="#缓存文件" class="headerlink" title="缓存文件"></a>缓存文件</h3><h4 id="HTTP缓存的意义"><a href="#HTTP缓存的意义" class="headerlink" title="HTTP缓存的意义"></a>HTTP缓存的意义</h4><p>访问一个网站时，我们可能会去请求许多文件，每次请求都需要获取到这些文件。如果其中有一些文件没有改动，那么我们没有必要每次都重新请求这些文件。如果我们能将这些文件缓存下来，那么下次请求的时候可以直接从本地读取，这样可以加快访问速度，节省流量。<br>如果要更新缓存，修改返回的文件名就可以了。</p>
+<h4 id="webpack更新缓存"><a href="#webpack更新缓存" class="headerlink" title="webpack更新缓存"></a>webpack更新缓存</h4><p>通过配置webpack，我们可以做到文件内容更新后，自动改变文件名，从而实现更新缓存的效果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="comment">// 此处省略其他配置项</span></span><br><span class="line"><span class="comment">// 配置文件hash</span></span><br><span class="line">output: &#123;</span><br><span class="line">  <span class="comment">// filename: &#x27;main.js&#x27;,</span></span><br><span class="line">  filename: <span class="string">&#x27;[name].[contenthash].js&#x27;</span>,</span><br><span class="line">  path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>)</span><br><span class="line">&#125;,</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这样配置之后，每次构建时，如果<code>src/index.js</code>有变动，会生成一个新的js文件放在<code>dist</code>目录下，且不会覆盖之前的文件。</p>
+<h3 id="使用webpack插件"><a href="#使用webpack插件" class="headerlink" title="使用webpack插件"></a>使用webpack插件</h3><p>这里我们使用<code>HtmlWebpackPlugin</code>来自动生成HTML，同时可以看看webpack插件是怎么用的。</p>
+<ol>
+<li>安装<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn add html-webpack-plugin --dev</span><br></pre></td></tr></table></figure></li>
+<li>配置<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="comment">// 此处省略其他配置</span></span><br><span class="line">plugins: [<span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">    title: <span class="string">&#x27;My App&#x27;</span>,</span><br><span class="line">    template: <span class="string">&#x27;./assets/test.html&#x27;</span></span><br><span class="line">&#125;)]</span><br></pre></td></tr></table></figure>
+这样配置之后，webpack会使用<code>assets/test.html</code>作为模板生成html文件，并且会自动将生成的bundle注入到此文件中。还会用<code>title</code>的值替换模板中的<code>&lt;%=htmlWebpackPlugin.options.title %&gt;</code>。</li>
+</ol>
+<h3 id="使用webpack-loader"><a href="#使用webpack-loader" class="headerlink" title="使用webpack loader"></a>使用webpack loader</h3><p>还记得我们说过webpack的一个强大特性是支持导入任何类型的模块吗？这里我们试着让webpack能像导入js模块一样导入CSS文件。<br>我们需要使用到<code>css-loader</code>。</p>
+<ol>
+<li>安装<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn add css-loader --dev</span><br><span class="line">yarn add style-loader --dev</span><br></pre></td></tr></table></figure></li>
+<li>配置<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/i</span>,</span><br><span class="line">        use: [<span class="string">&quot;style-loader&quot;</span>,<span class="string">&quot;css-loader&quot;</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+这里配置的意思是：</li>
+</ol>
+<blockquote>
+<p>“嘿，webpack 编译器，当你碰到「在 <code>require()</code>/<code>import</code> 语句中被解析为 ‘.css’ 的路径」时，在你对它打包之前，先 <strong>use(使用)</strong>  <code>css-loader</code> 转换一下。”</p>
+</blockquote>
+<p>这里<code>css-loader</code>的作用是读取CSS字符串到内存中；<code>style-loader</code>的作用是创建一个<code>style</code>标签，把CSS字符串放到标签里然后插入DOM。<br>配置完成之后，我们在<code>assests/</code>下创建<code>test.css</code>，然后在<code>src/index.js</code>中引入它：<code>import &#39;../assets/test.css&#39;</code>。<br><code>build</code>之后，我们在bundle中可以搜索到我们写的CSS规则。打开浏览器开发者工具，我们可以在<code>&lt;head&gt;</code>中找到被<code>style-loader</code>添加的<code>style</code>标签。</p>
+<p>注：<a target="_blank" rel="noopener" href="https://github.com/webpack-contrib/css-loader#recommend">官方文档推荐</a>在<code>production</code>模式下，将CSS文件抽离出来，而不是存储在JS模块中。这种方式需要使用到 <a target="_blank" rel="noopener" href="https://github.com/webpack-contrib/mini-css-extract-plugin">mini-css-extract-plugin</a>。</p>
+<h2 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h2><p>跟webpack类似的工具有这些：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://rollupjs.org/guide/en/">Rollup</a>：比webpack的打包体积更小，但生态不够丰富，适合库的开发。</li>
+<li><a target="_blank" rel="noopener" href="https://parceljs.org/">Parcel</a>：比webpack配置简单，功能也要少一些，适合demo学习。</li>
+<li><a target="_blank" rel="noopener" href="https://vitejs.dev/">Vite</a>：新一代构建工具。它使用原生 ESM 文件，无需打包。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://v4.webpack.docschina.org/">Webpack 4 中文文档</a><br><a target="_blank" rel="noopener" href="https://github.com/jantimon/html-webpack-plugin">Github - html-webpack-plugin</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>kpt
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="http://kpt.ink/2021/10/12/webpack-basic/">http://kpt.ink/2021/10/12/webpack-basic/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2021-10-12</p></div> 
+    <div class="post-meta__cats"><a href="/tags/webpack/" class="post-tags__link button"># webpack</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2021/10/12/Windows-rmdir/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Windows命令行删除文件夹
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2019&nbsp;-&nbsp;2021 <a href="/">kpt.ink</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+  
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
